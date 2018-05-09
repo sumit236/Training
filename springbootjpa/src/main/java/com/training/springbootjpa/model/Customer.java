@@ -1,16 +1,17 @@
 package com.training.springbootjpa.model;
 
-import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author Sumit
  *
  */
 @Entity
+@Table(name = "customer")
 public class Customer {
 
 	@Id
@@ -21,6 +22,14 @@ public class Customer {
 	private String paymentMode;
 	private String retailerId;
 
+
+	/**
+	 * 
+	 */
+    public Customer() {
+		super();
+	}
+    
 	/**
 	 * @param customerId
 	 * @param customerName
@@ -38,9 +47,6 @@ public class Customer {
 
 	}
 
-    public Customer() {
-		// TODO Auto-generated constructor stub
-	}
 	/**
 	 * @return the customerId
 	 */
@@ -101,4 +107,14 @@ public class Customer {
 		this.paymentMode = paymentMode;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerAddress="
+				+ customerAddress + ", paymentMode=" + paymentMode + ", retailerId=" + retailerId + "]";
+	}
+
+	
 }

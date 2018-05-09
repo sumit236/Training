@@ -1,12 +1,14 @@
 package com.training.springbootjpa.service;
 
+import java.util.List;
+
 import com.training.springbootjpa.model.Customer;
 
 public interface CustomerService {
 
 	Customer addCustomer(Customer customer);
 
-	public void deleteUserById(long id);
+	List<Customer> deleteCustomerById(long deleteById);
 
-	Customer updateCustomer(Long customerId);
+	Customer updateCustomerById(long updateById);
 }
