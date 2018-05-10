@@ -26,7 +26,6 @@ public class Supplier {
 	 * 
 	 */
 	public Supplier() {
-		super();
 	}
 
 	/**

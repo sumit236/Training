@@ -22,7 +22,6 @@ public class Retailer {
 	 * 
 	 */
 	public Retailer() {
-		super();
 	}
 
 	/**
@@ -31,7 +30,6 @@ public class Retailer {
 	 * @param retailerAddress
 	 */
 	public Retailer(Long retailerId, String retailerName, String retailerAddress) {
-		super();
 		this.retailerId = retailerId;
 		this.retailerName = retailerName;
 		this.retailerAddress = retailerAddress;

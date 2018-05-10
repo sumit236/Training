@@ -10,7 +10,23 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class SpringbootjpaApplicationTests {
 
 	@Test
-	public void contextLoads() {
+	public void checkCustomer()
+	{
+		
 	}
-
+	
+	public void checkGoods()
+	{
+		
+	}
+	
+	public void checkSupplier()
+	{
+		
+	}
+	
+	public void checkRetailer()
+	{
+		
+	}
 }

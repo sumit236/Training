@@ -27,7 +27,6 @@ public class Customer {
 	 * 
 	 */
     public Customer() {
-		super();
 	}
     
 	/**
@@ -105,6 +104,20 @@ public class Customer {
 	 */
 	public void setPaymentMode(String paymentMode) {
 		this.paymentMode = paymentMode;
+	}
+
+	/**
+	 * @return the retailerId
+	 */
+	public String getRetailerId() {
+		return retailerId;
+	}
+
+	/**
+	 * @param retailerId the retailerId to set
+	 */
+	public void setRetailerId(String retailerId) {
+		this.retailerId = retailerId;
 	}
 
 	/* (non-Javadoc)

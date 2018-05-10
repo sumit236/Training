@@ -6,5 +6,7 @@ import com.training.springbootjpa.model.Customer;
 
 public interface CustomerDAO extends JpaRepository<Customer, Long> {
 
-	//Customer findByCustomerName(long findByName);
+	Customer findByCustomerName(String customerName);
+
+	Customer findByCustomerId(Long customerId);
 }

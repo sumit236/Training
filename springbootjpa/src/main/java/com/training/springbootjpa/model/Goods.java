@@ -20,7 +20,6 @@ public class Goods {
 	 * 
 	 */
 	public Goods() {
-		super();
 	}
 
 	/**
@@ -31,7 +30,6 @@ public class Goods {
 	 * @param supplierId
 	 */
 	public Goods(Long goodsId, String goodsName, Integer goodsQuantity, Double goodsPrice, Long supplierId) {
-		super();
 		this.goodsId = goodsId;
 		this.goodsName = goodsName;
 		this.goodsQuantity = goodsQuantity;
