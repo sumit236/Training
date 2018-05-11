@@ -6,9 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,9 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.training.springbootjpa.exception.GenericException;
 import com.training.springbootjpa.model.Customer;
-import com.training.springbootjpa.model.Goods;
-import com.training.springbootjpa.model.Retailer;
-import com.training.springbootjpa.model.Supplier;
 import com.training.springbootjpa.repository.CustomerDAO;
 import com.training.springbootjpa.service.CustomerService;
 import com.training.springbootjpa.service.GoodsService;
@@ -44,19 +39,16 @@ public class MainController {
 	CustomerDAO customerDAO;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/addCustomer")
-	// @PostMapping(path = "/addCustomer")
-	public ResponseEntity<String> createCustomer(@RequestBody Customer customer) throws GenericException{
+	public ResponseEntity<String> addCustomer(@RequestBody Customer customer) throws GenericException {
 		String customerData = null;
 		try {
-		customerData = customerService.addCustomer(customer);
-		return new ResponseEntity(customerData, HttpStatus.OK);
-		}
-		catch(Exception e)
-		{
+			customerData = customerService.addCustomer(customer);
+			return new ResponseEntity(customerData, HttpStatus.OK);
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		if(customerData == null)
-		customerData = "Data not added ";
+		if (customerData == null)
+			customerData = "Data not added ";
 		return new ResponseEntity(customerData, HttpStatus.OK);
 	}
 
@@ -65,35 +57,31 @@ public class MainController {
 		Map<Long, String> mapList = new HashMap<>();
 		System.out.println("abcd");
 		try {
-			//System.out.println(mapList);
-		mapList = customerService.deleteCustomerById(customerId);
+			// System.out.println(mapList);
+			mapList = customerService.deleteCustomerById(customerId);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			if (mapList.isEmpty())
+				mapList.put(1L, "null not allowed");
+		}
+		return new ResponseEntity(mapList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/updateCustomer", method = RequestMethod.POST)
+	public ResponseEntity<Customer> updateCustomer(@RequestBody List<Long> updateById) throws GenericException {
+		Map<Long, String> mapList = new HashMap<>();
+		try {
+		mapList = customerService.updateCustomerById(updateById);
 		}catch(Exception e) {
 			System.out.println(e.getMessage());
+		} finally {
+			if (mapList.isEmpty())
+				mapList.put(1L, "null not allowed");
 		}
-		finally {
-			if(mapList.isEmpty())
-			mapList.put(1L,"null not allowed");
-		}
-		
 		return new ResponseEntity(mapList, HttpStatus.OK);
 	}
-
-	/*
-	 * @RequestMapping(value = "/deleteMultipleCustomerNew", method =
-	 * RequestMethod.POST) public ResponseEntity<Customer>
-	 * deleteMultipleCustomerNew(@RequestBody List<Long> customerId) {
-	 * System.out.println(">>>>" + customerId);
-	 * 
-	 * return new ResponseEntity("", HttpStatus.OK); }
-	 */
-
-	@RequestMapping(value = "/updateCustomer/{updateById}", method = RequestMethod.GET)
-	public ResponseEntity<Customer> updateCustomer(@RequestBody List<Long> updateById) {
-		final Map<Long, String> mapList;
-		mapList = customerService.updateCustomerById(updateById);
-		return new ResponseEntity(mapList, HttpStatus.OK);
-	}
-
+/*
 	@RequestMapping(method = RequestMethod.POST, value = "/addGoods", produces = MediaType.APPLICATION_JSON_VALUE)
 	// @PostMapping(path = "/addGoods")
 	public ResponseEntity<Goods> createGoods(@RequestBody Goods goods) {
@@ -171,4 +159,5 @@ public class MainController {
 		Customer customer = (Customer) customerDAO.findByCustomerId(customerId);
 		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 	}
+		*/
 }

@@ -65,16 +65,21 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Map<Long, String> updateCustomerById(List<Long> updateById) {
+	public Map<Long, String> updateCustomerById(List<Long> updateById) throws GenericException {
 		Map<Long, String> mapList = new HashMap<>();
-		for (Long customerId : updateById) {
-			Optional<Customer> customer = customerDAO.findById(customerId);
-			Customer customerDummy = customer.get();
-			if (customer.isPresent()) {
-				customerDummy.setPaymentMode("CREDIT");
-				mapList.put(customerId, "Payment updated");
-			} else
-				mapList.put(customerId, "Id to be updated is not found");
+		if (updateById.isEmpty())
+			throw new GenericException("Null id not allowed");
+		else {
+			for (Long customerId : updateById) {
+				Optional<Customer> customer = customerDAO.findById(customerId);
+				if (customer.isPresent()) {
+					Customer customerDummy = customer.get();
+					customerDummy.setPaymentMode("CREDIT");
+					mapList.put(customerId, "Payment updated");
+				Customer customerDump =	customerDAO.save(customerDummy);
+				} else
+					mapList.put(customerId, "Id to be updated is not found");
+			}
 		}
 		return mapList;
 	}
