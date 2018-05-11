@@ -24,7 +24,6 @@ public class CustomerServiceImpl implements CustomerService {
 	private Long id;
 	@Autowired
 	private CustomerDAO customerDAO;
-
 	@Override
 	public String addCustomer(Customer customer) throws GenericException {
 		String customerData = null;
