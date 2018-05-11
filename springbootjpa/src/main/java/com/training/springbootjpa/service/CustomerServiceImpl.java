@@ -26,8 +26,21 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustomerDAO customerDAO;
 
 	@Override
-	public Customer addCustomer(Customer customer) {
-		Customer customerData = customerDAO.save(customer);
+	public String addCustomer(Customer customer) throws GenericException {
+		String customerData = null;
+
+		String customerAddress = customer.getCustomerAddress();
+		String paymnetMode = customer.getPaymentMode();
+		boolean checkEmptyAddress = customerAddress.isEmpty();
+		boolean checkEmptyPayment = paymnetMode.isEmpty();
+		if (customerAddress == null || customerAddress.equals("null") || checkEmptyAddress) {
+			throw new GenericException("Address cannot be null");
+		} else if (paymnetMode == null || paymnetMode.equals("null") || checkEmptyPayment) {
+			throw new GenericException("Payment mode cannot be null");
+		} else {
+			Customer dummyCustomer = customerDAO.save(customer);
+			customerData = "Customer added successfully";
+		}
 		return customerData;
 	}
 
@@ -35,10 +48,10 @@ public class CustomerServiceImpl implements CustomerService {
 	public Map<Long, String> deleteCustomerById(List<Long> deleteById) throws GenericException {
 		Map<Long, String> mapList = new HashMap<>();
 		Optional<Customer> customer = null;
-		if (deleteById.isEmpty()) 
+		if (deleteById.isEmpty())
 			throw new GenericException("Null entry not allowed");
 		else {
-		for (Long customerId : deleteById) {
+			for (Long customerId : deleteById) {
 				customer = customerDAO.findById(customerId);
 				if (customer.isPresent()) {
 					mapList.put(customerId, "Data deleted");
@@ -48,10 +61,6 @@ public class CustomerServiceImpl implements CustomerService {
 				}
 			}
 		}
-		/*if(mapList.isEmpty())
-		{
-			mapList.put((long)1, "Null not allowed");
-		}*/
 		return mapList;
 	}
 

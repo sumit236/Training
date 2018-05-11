@@ -43,11 +43,20 @@ public class MainController {
 	@Autowired
 	CustomerDAO customerDAO;
 
-	@RequestMapping(method = RequestMethod.POST, value = "/addCustomer", produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(method = RequestMethod.POST, value = "/addCustomer")
 	// @PostMapping(path = "/addCustomer")
-	public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
-		final Customer customerData;
+	public ResponseEntity<String> createCustomer(@RequestBody Customer customer) throws GenericException{
+		String customerData = null;
+		try {
 		customerData = customerService.addCustomer(customer);
+		return new ResponseEntity(customerData, HttpStatus.OK);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		if(customerData == null)
+		customerData = "Data not added ";
 		return new ResponseEntity(customerData, HttpStatus.OK);
 	}
 
@@ -56,7 +65,7 @@ public class MainController {
 		Map<Long, String> mapList = new HashMap<>();
 		System.out.println("abcd");
 		try {
-			System.out.println(mapList);
+			//System.out.println(mapList);
 		mapList = customerService.deleteCustomerById(customerId);
 		}catch(Exception e) {
 			System.out.println(e.getMessage());

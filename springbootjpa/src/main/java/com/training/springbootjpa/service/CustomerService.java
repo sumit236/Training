@@ -8,7 +8,7 @@ import com.training.springbootjpa.model.Customer;
 
 public interface CustomerService {
 
-	Customer addCustomer(Customer customer);
+	String addCustomer(Customer customer) throws GenericException;
 
 	Map<Long, String> updateCustomerById(List<Long> updateById);
 
