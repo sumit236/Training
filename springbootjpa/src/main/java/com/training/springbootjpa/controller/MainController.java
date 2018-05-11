@@ -1,5 +1,6 @@
 package com.training.springbootjpa.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.training.springbootjpa.exception.GenericException;
 import com.training.springbootjpa.model.Customer;
 import com.training.springbootjpa.model.Goods;
 import com.training.springbootjpa.model.Retailer;
@@ -49,17 +52,20 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/deleteCustomer", method = RequestMethod.POST)
-	public ResponseEntity<Customer> deleteCustomer(@RequestBody List<Long> customerId) {
-		Map<Long, String> mapList = null;
+	public ResponseEntity<Customer> deleteCustomer(@RequestBody List<Long> customerId) throws GenericException {
+		Map<Long, String> mapList = new HashMap<>();
+		System.out.println("abcd");
 		try {
-			System.out.println("abcd");
-			mapList = customerService.deleteCustomerById(customerId);
-			mapList.put((long) 1, "Null not allowed");
 			System.out.println(mapList);
-		} catch (Exception exception) {
-			exception.getMessage();
+		mapList = customerService.deleteCustomerById(customerId);
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
 		}
-	
+		finally {
+			if(mapList.isEmpty())
+			mapList.put(1L,"null not allowed");
+		}
+		
 		return new ResponseEntity(mapList, HttpStatus.OK);
 	}
 

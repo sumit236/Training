@@ -2,6 +2,8 @@ package com.training.springbootjpa.service;
 
 import java.util.List;
 import java.util.Map;
+
+import com.training.springbootjpa.exception.GenericException;
 import com.training.springbootjpa.model.Customer;
 
 public interface CustomerService {
@@ -10,6 +12,6 @@ public interface CustomerService {
 
 	Map<Long, String> updateCustomerById(List<Long> updateById);
 
-	Map<Long, String> deleteCustomerById(List<Long> customerId);
+	Map<Long, String> deleteCustomerById(List<Long> customerId) throws GenericException;
 
 }
