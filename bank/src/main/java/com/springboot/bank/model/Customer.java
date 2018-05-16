@@ -3,7 +3,6 @@
  */
 package com.springboot.bank.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import org.springframework.lang.NonNull;
 
 /**
@@ -30,8 +28,9 @@ public class Customer {
 	private String customerName;
 	@NonNull
 	private Integer customerPin;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(referencedColumnName = "bankId")
+	@ManyToOne
+	// @JoinTable(name = "bank_customer", joinColumns = @JoinColumn(name = "customerId"), inverseJoinColumns = @JoinColumn(name = "bankId"))
+	@JoinColumn(name = "bankId")
 	private Bank bank;
 
 	/**
@@ -84,6 +83,32 @@ public class Customer {
 	 */
 	public void setCustomerPin(Integer customerPin) {
 		this.customerPin = customerPin;
+	}
+
+	/**
+	 * @return the bank
+	 */
+	public Bank getBank() {
+		return bank;
+	}
+
+	/**
+	 * @param bank
+	 *            the bank to set
+	 */
+	public void setBank(Bank bank) {
+		this.bank = bank;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerPin=" + customerPin
+				+ ", bank=" + bank + "]";
 	}
 
 }

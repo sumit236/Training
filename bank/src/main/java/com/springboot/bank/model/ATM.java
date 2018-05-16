@@ -4,42 +4,36 @@
 package com.springboot.bank.model;
 
 import java.math.BigDecimal;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * @author Sumit
  *
  */
+@Entity
+@Table(name = "atm")
 public class ATM {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long atmId;
 	// @Required
 	private BigDecimal money;
-	
-	@OneToMany
-	private Long bankId;
+	@ManyToOne
+	@JoinColumn(name = "bankId")
+	private Bank bank;
 
 	/**
 	 * 
 	 */
 	public ATM() {
 		super();
-	}
-
-	/**
-	 * @param atmId
-	 * @param amount
-	 * @param money
-	 * @param bankId
-	 */
-	public ATM(Long atmId, BigDecimal money, Long bankId) {
-		this.atmId = atmId;
-		this.money = money;
-		this.bankId = bankId;
 	}
 
 	/**
@@ -73,18 +67,18 @@ public class ATM {
 	}
 
 	/**
-	 * @return the bankId
+	 * @return the bank
 	 */
-	public Long getBankId() {
-		return bankId;
+	public Bank getBank() {
+		return bank;
 	}
 
 	/**
-	 * @param bankId
-	 *            the bankId to set
+	 * @param bank
+	 *            the bank to set
 	 */
-	public void setBankId(Long bankId) {
-		this.bankId = bankId;
+	public void setBank(Bank bank) {
+		this.bank = bank;
 	}
 
 	/*
@@ -94,7 +88,6 @@ public class ATM {
 	 */
 	@Override
 	public String toString() {
-		return "ATM [atmId=" + atmId + ", money=" + money + ", bankId=" + bankId + "]";
+		return "ATM [atmId=" + atmId + ", money=" + money + ", bank=" + bank + "]";
 	}
-
 }
