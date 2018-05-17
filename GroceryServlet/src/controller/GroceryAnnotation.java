@@ -1,7 +1,6 @@
 package controller;
 
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,18 +11,19 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
-@ComponentScan({"service","repository","controller"})
+@ComponentScan({ "service", "repository", "controller" })
 @PropertySource("classpath:database.properties")
 public class GroceryAnnotation {
 
 	@Autowired
 	Environment environment;
 
-/*	private final String URL = "jdbc:mysql://localhost:3306/grocery";
-	private final String USER = "root";
-	private final String DRIVER = "com.mysql.jdbc.Driver";
-	private final String PASSWORD = "root";*/
-	
+	/*
+	 * private final String URL = "jdbc:mysql://localhost:3306/grocery"; private
+	 * final String USER = "root"; private final String DRIVER =
+	 * "com.mysql.jdbc.Driver"; private final String PASSWORD = "root";
+	 */
+
 	@Bean
 	DataSource dataSource() {
 		final DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
