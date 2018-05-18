@@ -3,9 +3,7 @@
  */
 package com.springboot.bank.controller;
 
-import java.util.logging.Logger;
-
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +21,11 @@ import com.springboot.bank.wrapper.WrapperBankCustomer;
  * @author Sumit
  *
  */
+
 @RestController
 public class CustomerController {
 
-	final Logger LOGGER = (Logger) LoggerFactory.getLogger(CustomerController.class); 
+	final Logger LOGGER = Logger.getLogger(CustomerController.class);
 
 	@Autowired
 	private CustomerService customerService;
@@ -37,8 +36,8 @@ public class CustomerController {
 		Customer customerData = null;
 		try {
 			customerData = customerService.createCustomer(wrapperBankCustomer);
-		} catch (Exception e) {
-			LOGGER.info(e.getMessage());
+		} catch (BankException e) {
+			LOGGER.error(e.getMessage());
 		}
 		if (customerData == null)
 			throw new BankException("Customer details not added");
@@ -46,13 +45,13 @@ public class CustomerController {
 			return new ResponseEntity<Customer>(customerData, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/getCustomerDetails/{customerId}")
+	@GetMapping(value = "/viewCustomer/{customerId}")
 	public ResponseEntity<Customer> getCustomerDetails(@PathVariable Long customerId) throws BankException {
 		Customer customerData = null;
 		try {
 			customerData = customerService.getCustomerDetails(customerId);
-		} catch (Exception e) {
-			LOGGER.info(e.getMessage());
+		} catch (BankException e) {
+			LOGGER.error(e.getMessage());
 		}
 		if (customerData == null)
 			throw new BankException("No such Id of Bank exixts");

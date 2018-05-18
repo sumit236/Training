@@ -4,9 +4,7 @@
 package com.springboot.bank.controller;
 
 import java.math.BigDecimal;
-import java.util.logging.Logger;
-
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +22,11 @@ import com.springboot.bank.wrapper.WrapperBankATM;
  * @author Sumit
  *
  */
+
 @RestController
 public class ATMController {
 
-	final Logger LOGGER = (Logger) LoggerFactory.getLogger(ATMController.class);
+	final Logger LOGGER = Logger.getLogger(ATMController.class);
 
 	@Autowired
 	ATMService atmService;
@@ -37,22 +36,23 @@ public class ATMController {
 		ATM atmData = null;
 		try {
 			atmData = atmService.createATM(wrapperBankATM);
-		} catch (Exception e) {
-			LOGGER.info(e.getMessage());		}
+		} catch (BankException e) {
+			LOGGER.error(e.getMessage());
+		}
 		if (atmData == null)
 			throw new BankException("atm details not added");
 		else
 			return new ResponseEntity<ATM>(atmData, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/addMoneyFromBank/{atmId}/{bankId}/{moneyToBeAddedToATM}")
+	@PostMapping(value = "/addMoney/{atmId}/{bankId}/{moneyToBeAddedToATM}")
 	public ResponseEntity<ATM> addMoneyFromBank(@PathVariable Long atmId, @PathVariable Long bankId,
 			@PathVariable BigDecimal moneyToBeAddedToATM) throws BankException {
 		ATM atmData = null;
 		try {
 			atmData = atmService.addMoneyFromBank(atmId, bankId, moneyToBeAddedToATM);
-		} catch (Exception e) {
-			LOGGER.info(e.getMessage());
+		} catch (BankException e) {
+			LOGGER.error(e.getMessage());
 		}
 		if (atmData == null)
 			throw new BankException("atm details not added");
@@ -65,8 +65,8 @@ public class ATMController {
 		ATM atmData = null;
 		try {
 			atmData = atmService.withdrawMoney(atmDetails);
-		} catch (Exception e) {
-			LOGGER.info(e.getMessage());
+		} catch (BankException e) {
+			LOGGER.error(e.getMessage());
 		}
 		if (atmData == null)
 			throw new BankException("atm details not added");

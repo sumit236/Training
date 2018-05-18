@@ -3,9 +3,7 @@
  */
 package com.springboot.bank.controller;
 
-import java.util.logging.Logger;
-
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,23 +21,23 @@ import com.springboot.bank.wrapper.WrapperBankCustomerAccount;
  * @author Sumit
  *
  */
+
 @RestController
 public class AccountController {
 
 	@Autowired
 	AccountService accountService;
 
-		final Logger LOGGER = (Logger) LoggerFactory.getLogger(AccountController.class); 
+	final Logger LOGGER = Logger.getLogger(AccountController.class);
 
-	
 	@PostMapping(value = "/createAccount")
 	public ResponseEntity<Account> createAccount(@RequestBody WrapperBankCustomerAccount wrapperBankCustomerAccount)
 			throws BankException {
 		Account accountData = null;
 		try {
 			accountData = accountService.createAccount(wrapperBankCustomerAccount);
-		} catch (Exception e) {
-			LOGGER.info(e.getMessage());
+		} catch (BankException e) {
+			LOGGER.error(e.getMessage());
 		}
 		if (accountData == null)
 			throw new BankException("Account details not added");
@@ -52,8 +50,8 @@ public class AccountController {
 		Account accountData = null;
 		try {
 			accountData = accountService.depositMoney(accountDetails);
-		} catch (Exception e) {
-			LOGGER.info(e.getMessage());
+		} catch (BankException e) {
+			LOGGER.error(e.getMessage());
 		}
 		if (accountData == null)
 			throw new BankException("Account details not found");
@@ -66,8 +64,8 @@ public class AccountController {
 		Account accountData = null;
 		try {
 			accountData = accountService.withdrawMoney(accountDetails);
-		} catch (Exception e) {
-			LOGGER.info(e.getMessage());
+		} catch (BankException e) {
+			LOGGER.error(e.getMessage());
 		}
 		if (accountData == null)
 			throw new BankException("Account details not found");
@@ -75,13 +73,13 @@ public class AccountController {
 			return new ResponseEntity<Account>(accountData, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/getAccountDetails/{accountId}")
+	@PostMapping(value = "/viewAccount/{accountId}")
 	public ResponseEntity<Account> getAccountDetails(@PathVariable Long accountId) throws BankException {
 		Account accountData = null;
 		try {
 			accountData = accountService.getAccountDetails(accountId);
-		} catch (Exception e) {
-			LOGGER.info(e.getMessage());
+		} catch (BankException e) {
+			LOGGER.error(e.getMessage());
 		}
 		if (accountData == null)
 			throw new BankException("Account details not found");

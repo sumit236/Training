@@ -4,8 +4,7 @@
 package com.springboot.bank.controller;
 
 import java.util.Optional;
-import java.util.logging.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,7 @@ import com.springboot.bank.service.TransactionService;
 @RestController
 public class TransactionController {
 
-	final Logger LOGGER = (Logger) LoggerFactory.getLogger(TransactionController.class);
+	final Logger LOGGER = Logger.getLogger(TransactionController.class);
 
 	@Autowired
 	private TransactionService transactionService;
@@ -35,8 +34,8 @@ public class TransactionController {
 		String transactionData = null;
 		try {
 			transactionData = transactionService.createTransaction(transaction);
-		} catch (Exception e) {
-			LOGGER.info(e.getMessage());
+		} catch (BankException e) {
+			LOGGER.error(e.getMessage());
 		}
 		if (transactionData == null)
 			throw new BankException("Transaction details not added");
@@ -44,14 +43,14 @@ public class TransactionController {
 			return new ResponseEntity<String>(transactionData, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/getTransactionDetails/{customerId}")
+	@PostMapping(value = "/viewTransaction/{customerId}")
 	public ResponseEntity<Optional<Transaction>> getTransactionDetails(@PathVariable Long customerId)
 			throws BankException {
 		Optional<Transaction> transactionData = null;
 		try {
 			transactionData = transactionService.getTransactionDetails(customerId);
-		} catch (Exception e) {
-			LOGGER.info(e.getMessage());
+		} catch (BankException e) {
+			LOGGER.error(e.getMessage());
 		}
 		if (transactionData == null)
 			throw new BankException("Transaction details not found");
