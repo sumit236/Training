@@ -74,7 +74,7 @@ public class ATMServiceImpl implements ATMService {
 			else {
 				BigDecimal bankMoney = bank.getAmount();
 				BigDecimal finalAmount = bankMoney.subtract(moneyToBeAddedToATM);
-				if (finalAmount.compareTo(BigDecimal.ZERO) > 1000) {
+				if (finalAmount.compareTo(BigDecimal.ZERO) == 1) {
 					atm.setMoney(moneyToBeAddedToATM);
 					bank.setAmount(finalAmount);
 					atmdata = atmDao.save(atm);
@@ -105,7 +105,7 @@ public class ATMServiceImpl implements ATMService {
 				throw new BankException("No such account exists");
 			} else {
 				newAccountBalance = amountToBeWithdrawn.subtract(account.getAmount());
-				if (newAccountBalance.compareTo(BigDecimal.ZERO) > 0) {
+				if (newAccountBalance.compareTo(BigDecimal.ZERO) == 1) {
 					account.setAmount(newAccountBalance);
 					accountDao.save(account);
 				} else {
@@ -118,7 +118,7 @@ public class ATMServiceImpl implements ATMService {
 				throw new BankException("No such id of Bank exists");
 			} else {
 				BigDecimal newBankBalance = amountToBeWithdrawn.subtract(bank.getAmount());
-				if (newBankBalance.compareTo(BigDecimal.ZERO) > 0) {
+				if (newBankBalance.compareTo(BigDecimal.ZERO) == 1) {
 					bank.setAmount(newBankBalance);
 					bankDao.save(bank);
 				} else {
@@ -131,7 +131,7 @@ public class ATMServiceImpl implements ATMService {
 				throw new BankException("No such id of ATM exists");
 			} else {
 				BigDecimal newBankBalance = amountToBeWithdrawn.subtract(bank.getAmount());
-				if (newBankBalance.compareTo(BigDecimal.ZERO) > 0) {
+				if (newBankBalance.compareTo(BigDecimal.ZERO) == 1) {
 					atm.setMoney(newAccountBalance);
 					atmDao.save(atm);
 				} else {

@@ -132,8 +132,9 @@ public class AccountServiceImpl implements AccountService {
 				throw new BankException("No such id exists");
 			} else {
 				newAccountBalance = amountToBeWithdrawn.subtract(account.getAmount());
-				if (newAccountBalance.compareTo(BigDecimal.ZERO) < 0) {
-					throw new BankException("Account Balance cannot be negative");
+				if (newAccountBalance.compareTo(BigDecimal.ZERO) == 0
+						|| newAccountBalance.compareTo(BigDecimal.ZERO) == -1) {
+					throw new BankException("Account Balance cannot be 0 or negative");
 				} else {
 					Optional<Bank> bankList = bankDao.findById(bankId);
 					bank = bankList.get();
@@ -141,8 +142,9 @@ public class AccountServiceImpl implements AccountService {
 						throw new BankException("No such customer id exists");
 					} else {
 						BigDecimal newBankBalance = amountToBeWithdrawn.subtract(bank.getAmount());
-						if (newBankBalance.compareTo(BigDecimal.ZERO) < 0) {
-							throw new BankException("Bank Balance cannot be negative");
+						if (newBankBalance.compareTo(BigDecimal.ZERO) == 0
+								|| newBankBalance.compareTo(BigDecimal.ZERO) == -1) {
+							throw new BankException("Bank Balance cannot be 0 or negative");
 						} else {
 							Optional<Customer> customerList = customerDao.findById(customerId);
 							customer = customerList.get();
