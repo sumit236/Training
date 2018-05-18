@@ -3,6 +3,9 @@
  */
 package com.springboot.bank.controller;
 
+import java.util.logging.Logger;
+
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,8 @@ import com.springboot.bank.wrapper.WrapperBankCustomer;
 @RestController
 public class CustomerController {
 
+	final Logger LOGGER = (Logger) LoggerFactory.getLogger(CustomerController.class); 
+
 	@Autowired
 	private CustomerService customerService;
 
@@ -33,7 +38,7 @@ public class CustomerController {
 		try {
 			customerData = customerService.createCustomer(wrapperBankCustomer);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			LOGGER.info(e.getMessage());
 		}
 		if (customerData == null)
 			throw new BankException("Customer details not added");
@@ -47,7 +52,7 @@ public class CustomerController {
 		try {
 			customerData = customerService.getCustomerDetails(customerId);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			LOGGER.info(e.getMessage());
 		}
 		if (customerData == null)
 			throw new BankException("No such Id of Bank exixts");

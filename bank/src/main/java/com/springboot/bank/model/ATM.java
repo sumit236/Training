@@ -40,9 +40,7 @@ public class ATM {
 	 * @param money
 	 * @param bank
 	 */
-	public ATM(Long atmId, BigDecimal money, Bank bank) {
-		super();
-		this.atmId = atmId;
+	public ATM(BigDecimal money, Bank bank) {
 		this.money = money;
 		this.bank = bank;
 	}

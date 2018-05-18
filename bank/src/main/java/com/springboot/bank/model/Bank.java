@@ -43,9 +43,7 @@ public class Bank {
 	 * @param bankId
 	 * @param amount
 	 */
-	public Bank(Long bankId, BigDecimal amount) {
-		super();
-		this.bankId = bankId;
+	public Bank(BigDecimal amount) {
 		this.amount = amount;
 	}
 

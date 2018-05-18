@@ -3,6 +3,9 @@
  */
 package com.springboot.bank.controller;
 
+import java.util.logging.Logger;
+
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +29,9 @@ public class AccountController {
 	@Autowired
 	AccountService accountService;
 
+		final Logger LOGGER = (Logger) LoggerFactory.getLogger(AccountController.class); 
+
+	
 	@PostMapping(value = "/createAccount")
 	public ResponseEntity<Account> createAccount(@RequestBody WrapperBankCustomerAccount wrapperBankCustomerAccount)
 			throws BankException {
@@ -33,7 +39,7 @@ public class AccountController {
 		try {
 			accountData = accountService.createAccount(wrapperBankCustomerAccount);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			LOGGER.info(e.getMessage());
 		}
 		if (accountData == null)
 			throw new BankException("Account details not added");
@@ -47,7 +53,7 @@ public class AccountController {
 		try {
 			accountData = accountService.depositMoney(accountDetails);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			LOGGER.info(e.getMessage());
 		}
 		if (accountData == null)
 			throw new BankException("Account details not found");
@@ -61,7 +67,7 @@ public class AccountController {
 		try {
 			accountData = accountService.withdrawMoney(accountDetails);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			LOGGER.info(e.getMessage());
 		}
 		if (accountData == null)
 			throw new BankException("Account details not found");
@@ -75,7 +81,7 @@ public class AccountController {
 		try {
 			accountData = accountService.getAccountDetails(accountId);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			LOGGER.info(e.getMessage());
 		}
 		if (accountData == null)
 			throw new BankException("Account details not found");

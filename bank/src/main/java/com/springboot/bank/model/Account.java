@@ -41,9 +41,7 @@ public class Account {
 	 * @param customer
 	 * @param amount
 	 */
-	public Account(Long accountId, Bank bank, Customer customer, BigDecimal amount) {
-		super();
-		this.accountId = accountId;
+	public Account(Bank bank, Customer customer, BigDecimal amount) {
 		this.bank = bank;
 		this.customer = customer;
 		this.amount = amount;

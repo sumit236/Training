@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.springframework.lang.NonNull;
@@ -17,6 +16,7 @@ import org.springframework.lang.NonNull;
  * @author Sumit
  *
  */
+
 @Entity
 @Table(name = "customer")
 public class Customer {
@@ -46,8 +46,7 @@ public class Customer {
 	 * @param customerPin
 	 * @param bank
 	 */
-	public Customer(Long customerId, String customerName, Integer customerPin, Bank bank) {
-		this.customerId = customerId;
+	public Customer( String customerName, Integer customerPin, Bank bank) {
 		this.customerName = customerName;
 		this.customerPin = customerPin;
 		this.bank = bank;
