@@ -7,8 +7,6 @@ import java.math.BigDecimal;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.springboot.bank.exception.BankException;
 import com.springboot.bank.model.ATM;
 import com.springboot.bank.model.Account;
@@ -17,7 +15,6 @@ import com.springboot.bank.repository.ATMDAO;
 import com.springboot.bank.repository.AccountDAO;
 import com.springboot.bank.repository.BankDAO;
 import com.springboot.bank.wrapper.ATMDetails;
-import com.springboot.bank.wrapper.AccountDetails;
 import com.springboot.bank.wrapper.WrapperBankATM;
 
 /**
@@ -37,8 +34,6 @@ public class ATMServiceImpl implements ATMService {
 	AccountDAO accountDao;
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.springboot.bank.service.ATMService#createATM(com.springboot.bank.model.
 	 * ATM)
@@ -75,7 +70,8 @@ public class ATMServiceImpl implements ATMService {
 				BigDecimal bankMoney = bank.getAmount();
 				BigDecimal finalAmount = bankMoney.subtract(moneyToBeAddedToATM);
 				if (finalAmount.compareTo(BigDecimal.ZERO) == 1) {
-					atm.setMoney(moneyToBeAddedToATM);
+					BigDecimal atmMoney = atm.getMoney().add(moneyToBeAddedToATM);
+					atm.setMoney(atmMoney);
 					bank.setAmount(finalAmount);
 					atmdata = atmDao.save(atm);
 					bankDao.save(bank);
@@ -95,8 +91,9 @@ public class ATMServiceImpl implements ATMService {
 		Account account = null;
 		Bank bank = null;
 		ATM atm = null;
-		if (accountId == 0 || bankId == 0 || atmId == 0 || amountToBeWithdrawn.compareTo(BigDecimal.ZERO) == 0)
-			throw new BankException("Id or amount cannot be zero");
+		if (accountId == 0 || bankId == 0 || atmId == 0) {
+			throw new BankException("Id cannot be zero");
+		}
 		else {
 			Optional<Account> accountList = accountDao.findById(accountId);
 			account = accountList.get();

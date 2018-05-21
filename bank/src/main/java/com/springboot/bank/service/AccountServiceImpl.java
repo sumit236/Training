@@ -5,6 +5,9 @@ package com.springboot.bank.service;
 
 import java.math.BigDecimal;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.springboot.bank.exception.BankException;
@@ -38,8 +41,6 @@ public class AccountServiceImpl implements AccountService {
 	TransactionService transactionService;
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see
 	 * com.springboot.bank.service.AccountService#createAccount(com.springboot.bank.
 	 * wrapper.WrapperBankCustomerAccount)
@@ -47,27 +48,34 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Account createAccount(WrapperBankCustomerAccount wrapperBankCustomerAccount) throws BankException {
 
-		Account account = null;
-		Long bankId = wrapperBankCustomerAccount.getBankId();
-		Optional<Bank> bankList = bankDao.findById(bankId);
-		Bank bank = bankList.get();
-		if (bank == null) {
-			throw new BankException("Bank with such Id doesnt exist");
-		} else {
-			account.setBank(bank);
-		}
-		Long customerId = wrapperBankCustomerAccount.getCustomerId();
-		Optional<Customer> customerList = customerDao.findById(customerId);
-		Customer customer = customerList.get();
-		if (customer == null) {
-			throw new BankException("Customer with such Id doesnt exist");
-		} else {
-			account.setCustomer(customer);
-			account = accountDao.save(account);
+		Account account = wrapperBankCustomerAccount.getAccount();
+		if (account == null)
+			throw new BankException("Account not found");
+		else {
+			Long bankId = wrapperBankCustomerAccount.getBankId();
+			// System.out.println(bankId);
+			Optional<Bank> bankList = bankDao.findById(bankId);
+			Bank bank = bankList.get();
+			// System.out.println(bank);
+			if (bank == null) {
+				throw new BankException("Bank with such Id doesnt exist");
+			} else {
+				account.setBank(bank);
+			}
+			Long customerId = wrapperBankCustomerAccount.getCustomerId();
+			Optional<Customer> customerList = customerDao.findById(customerId);
+			Customer customer = customerList.get();
+			if (customer == null) {
+				throw new BankException("Customer with such Id doesnt exist");
+			} else {
+				account.setCustomer(customer);
+				account = accountDao.save(account);
+			}
 		}
 		return account;
 	}
 
+	@Transactional
 	@Override
 	public Account depositMoney(AccountDetails accountDetails) throws BankException {
 
@@ -113,6 +121,7 @@ public class AccountServiceImpl implements AccountService {
 		return account;
 	}
 
+	@Transactional
 	@Override
 	public Account withdrawMoney(AccountDetails accountDetails) throws BankException {
 		Long accountId = accountDetails.getAccountId();
@@ -122,26 +131,25 @@ public class AccountServiceImpl implements AccountService {
 		Account account = null;
 		Bank bank = null;
 		Customer customer = null;
-		if (accountId == 0 || bankId == 0 || customerId == 0 || amountToBeWithdrawn.compareTo(BigDecimal.ZERO) == 0)
+		if (accountId == 0 || bankId == 0 || customerId == 0) {
 			throw new BankException("Id or amount cannot be zero");
-		else {
+		}else {
 			Optional<Account> accountList = accountDao.findById(accountId);
 			account = accountList.get();
 			BigDecimal newAccountBalance;
 			if (account == null) {
-				throw new BankException("No such id exists");
+				throw new BankException("No such account exists");
 			} else {
-				newAccountBalance = amountToBeWithdrawn.subtract(account.getAmount());
-				if (newAccountBalance.compareTo(BigDecimal.ZERO) == 0
-						|| newAccountBalance.compareTo(BigDecimal.ZERO) == -1) {
+				newAccountBalance = account.getAmount().subtract(amountToBeWithdrawn);
+				if (newAccountBalance.compareTo(BigDecimal.ZERO) == -1) {
 					throw new BankException("Account Balance cannot be 0 or negative");
 				} else {
 					Optional<Bank> bankList = bankDao.findById(bankId);
 					bank = bankList.get();
 					if (bank == null) {
-						throw new BankException("No such customer id exists");
+						throw new BankException("No such bank id exists");
 					} else {
-						BigDecimal newBankBalance = amountToBeWithdrawn.subtract(bank.getAmount());
+						BigDecimal newBankBalance = bank.getAmount().subtract(amountToBeWithdrawn);
 						if (newBankBalance.compareTo(BigDecimal.ZERO) == 0
 								|| newBankBalance.compareTo(BigDecimal.ZERO) == -1) {
 							throw new BankException("Bank Balance cannot be 0 or negative");
@@ -151,21 +159,21 @@ public class AccountServiceImpl implements AccountService {
 							if (customer == null) {
 								throw new BankException("No such customer id exists");
 							} else {
-								account.setAmount(newAccountBalance);
-								accountDao.save(account);
-								bank.setAmount(newBankBalance);
 								Transaction transaction = new Transaction(customer, account, amountToBeWithdrawn,
 										"Money Withdrawn");
 								transactionService.createTransaction(transaction);
+								account.setAmount(newAccountBalance);
+								accountDao.save(account);
 								bank.setAmount(newBankBalance);
 								bankDao.save(bank);
+								
 							}
 						}
 					}
 				}
-				return account;
 			}
 		}
+		return account;
 	}
 
 	@Override

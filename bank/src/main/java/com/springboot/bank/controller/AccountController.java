@@ -59,7 +59,7 @@ public class AccountController {
 			return new ResponseEntity<Account>(accountData, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/withdrawMoney")
+	@PostMapping(value = "/withdrawMoneyFromAccount")
 	public ResponseEntity<Account> withdrawMoney(@RequestBody AccountDetails accountDetails) throws BankException {
 		Account accountData = null;
 		try {

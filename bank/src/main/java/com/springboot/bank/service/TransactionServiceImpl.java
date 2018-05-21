@@ -27,7 +27,6 @@ public class TransactionServiceImpl implements TransactionService {
 	CustomerDAO customerdao;
 
 	/*
-	 * (non-Javadoc)
 	 * 
 	 * @see com.springboot.bank.service.TransactionService#createTransaction(com.
 	 * springboot.bank.wrapper.TransactionDetails)

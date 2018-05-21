@@ -84,9 +84,7 @@ public class ATM {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	 * @return toString() representation of given object 
 	 */
 	@Override
 	public String toString() {

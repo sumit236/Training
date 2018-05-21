@@ -22,7 +22,6 @@ public class BankServiceImpl implements BankService {
 	BankDAO bankDao;
 
 	/*
-	 * (non-Javadoc)
 	 * 
 	 * @see
 	 * com.springboot.bank.service.BankService#createBank(com.springboot.bank.model.
@@ -32,7 +31,7 @@ public class BankServiceImpl implements BankService {
 	public Bank createBank(Bank bank) throws BankException {
 		Bank bankData = null;
 		final BigDecimal amount = bank.getAmount();
-		/*if (amount.compareTo(BigDecimal.ZERO) <= 0)
+		/*if (amount.compareTo(BigDecimal.ZERO) == -1)
 			throw new BankException("amount cannot be zero or less than zero");
 		else {*/
 			bankData = bankDao.save(bank);
@@ -40,7 +39,6 @@ public class BankServiceImpl implements BankService {
 	}
 
 	/*
-	 * (non-Javadoc)
 	 * 
 	 * @see com.springboot.bank.service.BankService#getBankDetails(java.lang.Long)
 	 */

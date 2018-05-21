@@ -60,7 +60,7 @@ public class ATMController {
 			return new ResponseEntity<ATM>(atmData, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/withdrawMoney")
+	@PostMapping(value = "/withdrawMoneyFromATM")
 	public ResponseEntity<ATM> withdrawMoney(@RequestBody ATMDetails atmDetails) throws BankException {
 		ATM atmData = null;
 		try {

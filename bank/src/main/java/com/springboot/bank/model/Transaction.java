@@ -5,6 +5,9 @@ package com.springboot.bank.model;
 
 import java.math.BigDecimal;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -17,6 +20,8 @@ import javax.persistence.Table;
 @Table(name = "transaction")
 public class Transaction {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long transactionId;
 	@ManyToOne(targetEntity = Customer.class)
 	private Customer customer;
@@ -122,9 +127,7 @@ public class Transaction {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	 * @return toString() representation of given object 
 	 */
 	@Override
 	public String toString() {
