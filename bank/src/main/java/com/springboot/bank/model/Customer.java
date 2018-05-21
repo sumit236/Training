@@ -46,7 +46,8 @@ public class Customer {
 	 * @param customerPin
 	 * @param bank
 	 */
-	public Customer( String customerName, Integer customerPin, Bank bank) {
+	public Customer(Long customerId, String customerName, Integer customerPin, Bank bank) {
+		this.customerId = customerId;
 		this.customerName = customerName;
 		this.customerPin = customerPin;
 		this.bank = bank;

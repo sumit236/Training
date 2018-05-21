@@ -34,9 +34,9 @@ public class ATMServiceImpl implements ATMService {
 	AccountDAO accountDao;
 
 	/*
-	 * @see
-	 * com.springboot.bank.service.ATMService#createATM(com.springboot.bank.model.
-	 * ATM)
+	 * @MethodName : createATM 
+	 * Description : The method accepts the wrapper object consisting bankId, ATM object
+	 * 				 and creates an ATM for a particular bank.
 	 */
 	@Override
 	public ATM createATM(WrapperBankATM wrapperBankATM) throws BankException {
@@ -53,6 +53,12 @@ public class ATMServiceImpl implements ATMService {
 		return ATMData;
 	}
 
+	/*
+	 * @MethodName : addMoneyFromBank 
+	 * Description : The method accepts the atmId as for the money to be added ATM, the bankId as 
+	 * 				 for the money is to be added from a particular Bank and accepts money to be 
+	 * 				 added to a particular ATM.
+	 */
 	@Override
 	public ATM addMoneyFromBank(Long atmId, Long bankId, BigDecimal moneyToBeAddedToATM) throws BankException {
 
@@ -82,6 +88,13 @@ public class ATMServiceImpl implements ATMService {
 		}
 	}
 
+	/*
+	 * @MethodName : withdrawMoney 
+	 * Description : The method accepts the wrapper object consisting bankId, atmId, accountId
+	 * 				 from where the money is to be withdrawn. It also consist the amount to be 
+	 * 				 withdrawn from the particular account.
+	 * 
+	 */
 	@Override
 	public ATM withdrawMoney(ATMDetails atmDetails) throws BankException {
 		Long atmId = atmDetails.getAccountId();

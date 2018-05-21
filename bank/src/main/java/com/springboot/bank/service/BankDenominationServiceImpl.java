@@ -5,27 +5,20 @@ package com.springboot.bank.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.springboot.bank.exception.BankException;
-import com.springboot.bank.model.Bank;
-import com.springboot.bank.model.BankDenomination;
 import com.springboot.bank.model.BankDenomination;
 import com.springboot.bank.repository.BankDAO;
-import com.springboot.bank.repository.BankDenominationDAO;
-import com.springboot.bank.wrapper.WrapperBankDenomination;
 
 /**
  * @author Sumit
  *
  */
+
 @Service("bankDenominationService")
 public class BankDenominationServiceImpl implements BankDenominationService {
-
-	@Autowired
-	private BankDenominationDAO bankDenominationDAO;
 
 	@Autowired
 	BankDAO bankDao;
@@ -55,6 +48,11 @@ public class BankDenominationServiceImpl implements BankDenominationService {
 	 * BankException("bank is not present"); } return bankDenomination; }
 	 */
 
+	/*
+	 * @MethodName : addDenominationNew 
+	 * Description : The method accepts the amount as an argument and calculates the 
+	 * 				 denomination and total number denominations for that amount. 
+	 */
 	@Override
 	public void addDenominationNew(Integer amount) throws BankException {
 
@@ -83,6 +81,5 @@ public class BankDenominationServiceImpl implements BankDenominationService {
 			}
 			list1.remove(randomIndex);
 		}
-
 	}
 }

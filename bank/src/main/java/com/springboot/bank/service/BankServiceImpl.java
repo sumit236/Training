@@ -31,10 +31,11 @@ public class BankServiceImpl implements BankService {
 	public Bank createBank(Bank bank) throws BankException {
 		Bank bankData = null;
 		final BigDecimal amount = bank.getAmount();
-		/*if (amount.compareTo(BigDecimal.ZERO) == -1)
+		if (amount.compareTo(BigDecimal.ZERO) == -1) {
 			throw new BankException("amount cannot be zero or less than zero");
-		else {*/
+		}else {
 			bankData = bankDao.save(bank);
+		}
 			return bankData;
 	}
 

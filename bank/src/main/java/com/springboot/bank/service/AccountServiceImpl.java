@@ -41,9 +41,9 @@ public class AccountServiceImpl implements AccountService {
 	TransactionService transactionService;
 
 	/*
-	 * @see
-	 * com.springboot.bank.service.AccountService#createAccount(com.springboot.bank.
-	 * wrapper.WrapperBankCustomerAccount)
+	 * @MethodName : createAccount 
+	 * Description : The method accepts the wrapper object consisting bankId, customerId,
+	 * 				 account object and creates an account.
 	 */
 	@Override
 	public Account createAccount(WrapperBankCustomerAccount wrapperBankCustomerAccount) throws BankException {
@@ -75,6 +75,12 @@ public class AccountServiceImpl implements AccountService {
 		return account;
 	}
 
+	/*
+	 * @MethodName : depositMoney 
+	 * Description : The method accepts the wrapper object consisting bankId, customerId, 
+	 * 				 accountId and the amount to be deposited to a particular account. It also 
+	 * 				 creates transaction whenever money is deposited. 			 
+	 */
 	@Transactional
 	@Override
 	public Account depositMoney(AccountDetails accountDetails) throws BankException {
@@ -121,6 +127,12 @@ public class AccountServiceImpl implements AccountService {
 		return account;
 	}
 
+	/*
+	 * @MethodName : withdrawMoney 
+	 * Description : The method accepts the wrapper object consisting bankId, customerId, 
+	 * 				 accountId and the amount to be deposited to a particular account. It also 
+	 * 				 creates transaction whenever money is withdrawn. 			 
+	 */
 	@Transactional
 	@Override
 	public Account withdrawMoney(AccountDetails accountDetails) throws BankException {
@@ -133,7 +145,7 @@ public class AccountServiceImpl implements AccountService {
 		Customer customer = null;
 		if (accountId == 0 || bankId == 0 || customerId == 0) {
 			throw new BankException("Id or amount cannot be zero");
-		}else {
+		} else {
 			Optional<Account> accountList = accountDao.findById(accountId);
 			account = accountList.get();
 			BigDecimal newAccountBalance;
@@ -166,7 +178,6 @@ public class AccountServiceImpl implements AccountService {
 								accountDao.save(account);
 								bank.setAmount(newBankBalance);
 								bankDao.save(bank);
-								
 							}
 						}
 					}
@@ -176,6 +187,11 @@ public class AccountServiceImpl implements AccountService {
 		return account;
 	}
 
+	/*
+	 * @MethodName : getAccountDetails 
+	 * Description : The method accepts the accountId and returns the details for that
+	 * 				 particular account.		 
+	 */
 	@Override
 	public Account getAccountDetails(Long accountId) throws BankException {
 		Optional<Account> accountList = accountDao.findById(accountId);
