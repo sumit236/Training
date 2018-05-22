@@ -30,20 +30,22 @@ import com.springboot.bank.wrapper.WrapperBankCustomerAccount;
 public class AccountServiceImpl implements AccountService {
 
 	@Autowired
-	BankDAO bankDao;
+	private BankDAO bankDao;
 
 	@Autowired
-	CustomerDAO customerDao;
+	private CustomerDAO customerDao;
 
 	@Autowired
-	AccountDAO accountDao;
+	private AccountDAO accountDao;
 
 	@Autowired
-	TransactionService transactionService;
+	private TransactionService transactionService;
 	
 	@Autowired
-	DenominationService denominationService;
+	private DenominationService denominationService;
 
+	@Autowired
+	private BankDenominationService bankDenominationService;
 	/*
 	 * @MethodName : createAccount 
 	 * Description : The method accepts the wrapper object consisting bankId, customerId,
@@ -105,8 +107,7 @@ public class AccountServiceImpl implements AccountService {
 			if (account == null) {
 				throw new BankException("No such account id exists");
 			} else {
-				Map<BigDecimal, Integer> denominationList = denominationService.addDenomination(amountToBeAdded);
-				System.out.println(denominationList);
+				
 				newAccountBalance = amountToBeAdded.add(account.getAmount());
 				Optional<Customer> customerList = customerDao.findById(customerId);
 				customer = customerList.get();
@@ -118,15 +119,16 @@ public class AccountServiceImpl implements AccountService {
 					if (bank == null) {
 						throw new BankException("No such bank account exists");
 					} else {
-						
+						Map<BigDecimal, Integer> denominationList = denominationService.addDenomination(amountToBeAdded);
+						System.out.println(denominationList);
 						account.setAmount(newAccountBalance);
 						accountDao.save(account);
 						Transaction transaction = new Transaction(customer, account, amountToBeAdded,
 								"Money Deposited");
 						transactionService.createTransaction(transaction);
-						BigDecimal newBankBalance = amountToBeAdded.add(bank.getAmount());
-						bank.setAmount(newBankBalance);
-						bankDao.save(bank);
+						
+						bankDenominationService.addToBankFromAccount(bankId,amountToBeAdded,denominationList);
+						
 					}
 				}
 			}

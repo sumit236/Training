@@ -25,27 +25,14 @@ public class BankDenomination {
 	@OneToOne(targetEntity = Bank.class)
 	private Bank bank;
 	private Integer noOfDenomination;
-	private BigDecimal denomination;
+	@OneToOne(targetEntity = RefMoney.class)
+	private RefMoney refMoney;
 
 	/**
 	 * 
 	 */
 	public BankDenomination() {
 		super();
-	}
-
-	/**
-	 * @param bankDenominationId
-	 * @param bank
-	 * @param noOfDenomination
-	 * @param denomination
-	 */
-	public BankDenomination(Long bankDenominationId, Bank bank, Integer noOfDenomination, BigDecimal denomination) {
-		super();
-		this.bankDenominationId = bankDenominationId;
-		this.bank = bank;
-		this.noOfDenomination = noOfDenomination;
-		this.denomination = denomination;
 	}
 
 	/**
@@ -94,28 +81,43 @@ public class BankDenomination {
 	}
 
 	/**
-	 * @return the denomination
+	 * @return the refMoney
 	 */
-	public BigDecimal getDenomination() {
-		return denomination;
+	public RefMoney getRefMoney() {
+		return refMoney;
 	}
 
 	/**
-	 * @param denomination
-	 *            the denomination to set
+	 * @param refMoney
+	 *            the refMoney to set
 	 */
-	public void setDenomination(BigDecimal denomination) {
-		this.denomination = denomination;
+	public void setRefMoney(RefMoney refMoney) {
+		this.refMoney = refMoney;
+	}
+
+	/**
+	 * @param bankDenominationId
+	 * @param bank
+	 * @param noOfDenomination
+	 * @param refMoney
+	 */
+	public BankDenomination(Long bankDenominationId, Bank bank, Integer noOfDenomination, RefMoney refMoney) {
+		super();
+		this.bankDenominationId = bankDenominationId;
+		this.bank = bank;
+		this.noOfDenomination = noOfDenomination;
+		this.refMoney = refMoney;
 	}
 
 	/*
+	 * (non-Javadoc)
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "BankDenomination [bankDenominationId=" + bankDenominationId + ", bank=" + bank + ", noOfDenomination="
-				+ noOfDenomination + ", denomination=" + denomination + "]";
+				+ noOfDenomination + ", refMoney=" + refMoney + "]";
 	}
 
 }
