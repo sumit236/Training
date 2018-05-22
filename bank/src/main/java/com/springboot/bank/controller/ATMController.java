@@ -45,12 +45,12 @@ public class ATMController {
 			return new ResponseEntity<ATM>(atmData, HttpStatus.OK);
 	}
 
-	@PostMapping(value = "/addMoney/{atmId}/{bankId}/{moneyToBeAddedToATM}")
+	@PostMapping(value = "/addMoney/{atmId}/{bankId}/{moneyToBeAddedToATM}/{atmDenominationId}")
 	public ResponseEntity<ATM> addMoneyFromBank(@PathVariable Long atmId, @PathVariable Long bankId,
-			@PathVariable BigDecimal moneyToBeAddedToATM) throws BankException {
+			@PathVariable BigDecimal moneyToBeAddedToATM, @PathVariable Long atmDenominationId) throws BankException {
 		ATM atmData = null;
 		try {
-			atmData = atmService.addMoneyFromBank(atmId, bankId, moneyToBeAddedToATM);
+			atmData = atmService.addMoneyFromBank(atmId, bankId, moneyToBeAddedToATM, atmDenominationId);
 		} catch (BankException e) {
 			LOGGER.error(e.getMessage());
 		}

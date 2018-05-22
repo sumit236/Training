@@ -3,6 +3,8 @@
  */
 package com.springboot.bank.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,11 +21,11 @@ public class BankDenomination {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long denominationId;
+	private Long bankDenominationId;
 	@OneToOne(targetEntity = Bank.class)
 	private Bank bank;
 	private Integer noOfDenomination;
-	private Integer denomination;
+	private BigDecimal denomination;
 
 	/**
 	 * 
@@ -32,32 +34,33 @@ public class BankDenomination {
 		super();
 	}
 
-	
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "BankDenominationNew [denominationId=" + denominationId + ", bank=" + bank + ", noOfDenomination="
-				+ noOfDenomination + ", denomination=" + denomination + "]";
-	}
-
-
-
 	/**
-	 * @return the denominationId
+	 * @param bankDenominationId
+	 * @param bank
+	 * @param noOfDenomination
+	 * @param denomination
 	 */
-	public Long getDenominationId() {
-		return denominationId;
+	public BankDenomination(Long bankDenominationId, Bank bank, Integer noOfDenomination, BigDecimal denomination) {
+		super();
+		this.bankDenominationId = bankDenominationId;
+		this.bank = bank;
+		this.noOfDenomination = noOfDenomination;
+		this.denomination = denomination;
 	}
 
 	/**
-	 * @param denominationId
-	 *            the denominationId to set
+	 * @return the bankDenominationId
 	 */
-	public void setDenominationId(Long denominationId) {
-		this.denominationId = denominationId;
+	public Long getBankDenominationId() {
+		return bankDenominationId;
+	}
+
+	/**
+	 * @param bankDenominationId
+	 *            the bankDenominationId to set
+	 */
+	public void setBankDenominationId(Long bankDenominationId) {
+		this.bankDenominationId = bankDenominationId;
 	}
 
 	/**
@@ -75,7 +78,6 @@ public class BankDenomination {
 		this.bank = bank;
 	}
 
-	
 	/**
 	 * @return the noOfDenomination
 	 */
@@ -91,40 +93,29 @@ public class BankDenomination {
 		this.noOfDenomination = noOfDenomination;
 	}
 
-
-
 	/**
 	 * @return the denomination
 	 */
-	public Integer getDenomination() {
+	public BigDecimal getDenomination() {
 		return denomination;
 	}
 
-
-
 	/**
-	 * @param denomination the denomination to set
-	 */
-	public void setDenomination(Integer denomination) {
-		this.denomination = denomination;
-	}
-
-
-
-	/**
-	 * @param denominationId
-	 * @param bank
-	 * @param noOfDenomination
 	 * @param denomination
+	 *            the denomination to set
 	 */
-	public BankDenomination(Long denominationId, Bank bank, Integer noOfDenomination, Integer denomination) {
-		super();
-		this.denominationId = denominationId;
-		this.bank = bank;
-		this.noOfDenomination = noOfDenomination;
+	public void setDenomination(BigDecimal denomination) {
 		this.denomination = denomination;
 	}
 
-	
+	/*
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BankDenomination [bankDenominationId=" + bankDenominationId + ", bank=" + bank + ", noOfDenomination="
+				+ noOfDenomination + ", denomination=" + denomination + "]";
+	}
 
 }

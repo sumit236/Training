@@ -14,6 +14,7 @@ import com.springboot.bank.model.Bank;
 import com.springboot.bank.repository.ATMDAO;
 import com.springboot.bank.repository.AccountDAO;
 import com.springboot.bank.repository.BankDAO;
+import com.springboot.bank.repository.BankDenominationDAO;
 import com.springboot.bank.wrapper.ATMDetails;
 import com.springboot.bank.wrapper.WrapperBankATM;
 
@@ -33,6 +34,11 @@ public class ATMServiceImpl implements ATMService {
 	@Autowired
 	AccountDAO accountDao;
 
+	@Autowired
+	BankDenominationDAO bankDenominationDao;
+	
+	@Autowired
+	ATMDenominationService atmDenominationService;
 	/*
 	 * @MethodName : createATM 
 	 * Description : The method accepts the wrapper object consisting bankId, ATM object
@@ -60,7 +66,7 @@ public class ATMServiceImpl implements ATMService {
 	 * 				 added to a particular ATM.
 	 */
 	@Override
-	public ATM addMoneyFromBank(Long atmId, Long bankId, BigDecimal moneyToBeAddedToATM) throws BankException {
+	public ATM addMoneyFromBank(Long atmId, Long bankId, BigDecimal moneyToBeAddedToATM, Long atmDenominationId) throws BankException {
 
 		Optional<ATM> atmList = atmDao.findById(atmId);
 		ATM atmdata = null;
@@ -77,6 +83,7 @@ public class ATMServiceImpl implements ATMService {
 				BigDecimal finalAmount = bankMoney.subtract(moneyToBeAddedToATM);
 				if (finalAmount.compareTo(BigDecimal.ZERO) == 1) {
 					BigDecimal atmMoney = atm.getMoney().add(moneyToBeAddedToATM);
+					atmDenominationService.addDenomination(moneyToBeAddedToATM,atmId,atmDenominationId);
 					atm.setMoney(atmMoney);
 					bank.setAmount(finalAmount);
 					atmdata = atmDao.save(atm);
@@ -114,7 +121,7 @@ public class ATMServiceImpl implements ATMService {
 			if (account == null) {
 				throw new BankException("No such account exists");
 			} else {
-				newAccountBalance = amountToBeWithdrawn.subtract(account.getAmount());
+				newAccountBalance = account.getAmount().subtract(amountToBeWithdrawn);
 				if (newAccountBalance.compareTo(BigDecimal.ZERO) == 1) {
 					account.setAmount(newAccountBalance);
 					accountDao.save(account);
@@ -127,7 +134,7 @@ public class ATMServiceImpl implements ATMService {
 			if (bank == null) {
 				throw new BankException("No such id of Bank exists");
 			} else {
-				BigDecimal newBankBalance = amountToBeWithdrawn.subtract(bank.getAmount());
+				BigDecimal newBankBalance = bank.getAmount().subtract(amountToBeWithdrawn);
 				if (newBankBalance.compareTo(BigDecimal.ZERO) == 1) {
 					bank.setAmount(newBankBalance);
 					bankDao.save(bank);
@@ -140,7 +147,7 @@ public class ATMServiceImpl implements ATMService {
 			if (atm == null) {
 				throw new BankException("No such id of ATM exists");
 			} else {
-				BigDecimal newBankBalance = amountToBeWithdrawn.subtract(bank.getAmount());
+				BigDecimal newBankBalance = atm.getMoney().subtract(amountToBeWithdrawn);
 				if (newBankBalance.compareTo(BigDecimal.ZERO) == 1) {
 					atm.setMoney(newAccountBalance);
 					atmDao.save(atm);

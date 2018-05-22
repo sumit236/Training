@@ -22,10 +22,8 @@ public class BankServiceImpl implements BankService {
 	BankDAO bankDao;
 
 	/*
-	 * 
-	 * @see
-	 * com.springboot.bank.service.BankService#createBank(com.springboot.bank.model.
-	 * Bank)
+	 *@MethodName	:	createBank.
+	 * Description	:	The method is used to create a new bank with default amount 0.
 	 */
 	@Override
 	public Bank createBank(Bank bank) throws BankException {
@@ -40,8 +38,10 @@ public class BankServiceImpl implements BankService {
 	}
 
 	/*
-	 * 
-	 * @see com.springboot.bank.service.BankService#getBankDetails(java.lang.Long)
+	 *@MethodName	:	getBankDetails.
+	 * Description 	: 	It will give the about details of bank by passing bankId of 
+	 * 					that particular bank.
+	 * Exception	: 	It will throw an exception if bankId is not found.
 	 */
 	@Override
 	public Bank getBankDetails(Long bankId) throws BankException {

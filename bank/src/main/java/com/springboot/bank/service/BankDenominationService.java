@@ -3,9 +3,7 @@
  */
 package com.springboot.bank.service;
 
-import com.springboot.bank.exception.BankException;
-import com.springboot.bank.model.BankDenomination;
-import com.springboot.bank.wrapper.WrapperBankDenomination;
+import java.math.BigDecimal;
 
 /**
  * @author Sumit
@@ -13,8 +11,5 @@ import com.springboot.bank.wrapper.WrapperBankDenomination;
  */
 public interface BankDenominationService {
 
-	//BankDenomination addDenomination(WrapperBankDenomination wrapperBankDenomination) throws BankException;
-
-	void  addDenominationNew(Integer amount) throws BankException;
-
+	void addToBankFromAccount(Long bankId,BigDecimal amount);
 }

@@ -4,6 +4,7 @@
 package com.springboot.bank.service;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -39,6 +40,9 @@ public class AccountServiceImpl implements AccountService {
 
 	@Autowired
 	TransactionService transactionService;
+	
+	@Autowired
+	DenominationService denominationService;
 
 	/*
 	 * @MethodName : createAccount 
@@ -101,6 +105,8 @@ public class AccountServiceImpl implements AccountService {
 			if (account == null) {
 				throw new BankException("No such account id exists");
 			} else {
+				Map<BigDecimal, Integer> denominationList = denominationService.addDenomination(amountToBeAdded);
+				System.out.println(denominationList);
 				newAccountBalance = amountToBeAdded.add(account.getAmount());
 				Optional<Customer> customerList = customerDao.findById(customerId);
 				customer = customerList.get();
@@ -112,6 +118,7 @@ public class AccountServiceImpl implements AccountService {
 					if (bank == null) {
 						throw new BankException("No such bank account exists");
 					} else {
+						
 						account.setAmount(newAccountBalance);
 						accountDao.save(account);
 						Transaction transaction = new Transaction(customer, account, amountToBeAdded,

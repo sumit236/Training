@@ -10,6 +10,7 @@ package com.springboot.bank;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 import java.math.BigDecimal;
@@ -18,37 +19,47 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import com.springboot.bank.controller.BankController;
 import com.springboot.bank.exception.BankException;
 import com.springboot.bank.model.Bank;
-import com.springboot.bank.repository.BankDAO;
-import com.springboot.bank.repository.CustomerDAO;
-import com.springboot.bank.service.BankServiceImpl;
+import com.springboot.bank.service.BankService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BankServiceTest{
-
-
-	@Mock
-	BankDAO bankDao;
+public class BankServiceTest {
 
 	@Mock
-	CustomerDAO customerDao;
+	BankService bankService;
 
 	@InjectMocks
-	BankServiceImpl bankServiceImpl;
+	BankController bankController;
 
 	@Test
-	public void createBank() {
+	public void trueCheckCreateBank() throws BankException {
 		final Bank bank = new Bank(1L, new BigDecimal(1000));
-		when(bankDao.save(bank)).thenReturn(bank);
-		assertThat(bankServiceImpl.createBank(bank), is(notNullValue()));
+		when(bankService.createBank(bank)).thenReturn(bank);
+		assertThat(bankController.addBank(bank), is(notNullValue()));
 	}
 
-	@Test(expected = BankException.class)
-	public void createBanks() {
+	@Test
+	public void falseCheckCreateBank() throws BankException {
 		Bank bank = new Bank(-1L, new BigDecimal(2000));
-		when(bankServiceImpl.createBank(bank)).thenThrow(new BankException(" Zero or Negative Id Not Found"));
+		try {
+			when(bankService.createBank(bank)).thenReturn(bank);
+		} catch (BankException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ResponseEntity<Bank> bankDummy = null;
+		try {
+			bankDummy = bankController.addBank(bank);
+		} catch (BankException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(bankDummy);
+		assertEquals("Bank not found", bankDummy.getBody(), bank);
 	}
 }

@@ -26,6 +26,10 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	BankDAO bankDao;
 
+	/*
+	 *@MethodName	:	createCustomer.
+	 * Description	:	It will create a new customer having bankId associated with it.
+	 */
 	@Override
 	public Customer createCustomer(WrapperBankCustomer wrapperBankCustomer) throws BankException {
 		Customer customer = null;
@@ -41,6 +45,11 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerData;
 	}
 
+	/*
+	 *@MethodName	:	getCustomerDetails.
+	 * Description	:	It will take customerId as a parameter and find 
+	 * 					the details of a particular customer from it. 
+	 */
 	@Override
 	public Customer getCustomerDetails(Long customerId) throws BankException {
 		Optional<Customer> customerList = customerDao.findById(customerId);

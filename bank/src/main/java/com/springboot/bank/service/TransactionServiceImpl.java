@@ -27,9 +27,10 @@ public class TransactionServiceImpl implements TransactionService {
 	CustomerDAO customerdao;
 
 	/*
-	 * 
-	 * @see com.springboot.bank.service.TransactionService#createTransaction(com.
-	 * springboot.bank.wrapper.TransactionDetails)
+	 *@MethodName	:	createTransaction.
+	 * Description	:	It will create a statement for a account of a customer
+	 * 					which contain typeOfPayment,AMount etc.
+	 * Exception	:	It throws exception if user enter accountId/customerId = 0.
 	 */
 	@Override
 	public String createTransaction(Transaction transaction) throws BankException {
@@ -38,7 +39,6 @@ public class TransactionServiceImpl implements TransactionService {
 		Long customerId = customer.getCustomerId();
 		Account account = transaction.getAccount();
 		Long accountId = account.getAccountId();
-
 		if (accountId == 0) {
 			throw new BankException("accountId cannot be 0");
 		} else if (customerId == 0) {
@@ -49,6 +49,13 @@ public class TransactionServiceImpl implements TransactionService {
 		}
 	}
 
+
+	/*
+	 *@MethodName	:	getTransactionDetails.
+	 * Description	: 	It will get details statement for a account of a customer
+	 * 					which contain typeOfPayment,AMount etc.
+	 * Exception	:	It throws exception if customerId = 0.
+	 */
 	@Override
 	public Optional<Transaction> getTransactionDetails(Long customerId) throws BankException {
 
