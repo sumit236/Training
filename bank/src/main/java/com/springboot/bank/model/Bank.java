@@ -24,29 +24,6 @@ public class Bank {
 	@Column(name = "bankId")
 	private Long bankId;
 	private BigDecimal amount;
-	/*
-	 * @OneToMany(mappedBy = "bank") private List<Customer> customer = new
-	 * ArrayList<Customer>();
-	 */
-	/*
-	 * @OneToMany(mappedBy = "bank") private List<ATM> atm = new ArrayList<ATM>();
-	 */
-
-	/**
-	 * 
-	 */
-	public Bank() {
-		super();
-	}
-
-	/**
-	 * @param bankId
-	 * @param amount
-	 */
-	public Bank(Long bankId, BigDecimal amount) {
-		this.bankId = bankId;
-		this.amount = amount;
-	}
 
 	/**
 	 * @return the bankId
@@ -79,10 +56,30 @@ public class Bank {
 	}
 
 	/*
-	 * @return toString() representation of given object 
+	 * 
+	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "Bank [bankId=" + bankId + ", amount=" + amount + "]";
 	}
+
+	/**
+	 * @param bankId
+	 * @param amount
+	 * @param bankDenomination
+	 */
+	public Bank(Long bankId, BigDecimal amount) {
+		this.bankId = bankId;
+		this.amount = amount;
+	}
+
+	/**
+	 * 
+	 */
+	public Bank() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 }

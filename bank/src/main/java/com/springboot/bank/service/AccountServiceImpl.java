@@ -127,7 +127,7 @@ public class AccountServiceImpl implements AccountService {
 								"Money Deposited");
 						transactionService.createTransaction(transaction);
 						
-						bankDenominationService.addToBankFromAccount(bankId,amountToBeAdded,denominationList);
+						//bankDenominationService.addToBankFromAccount(bankId,amountToBeAdded,denominationList);
 						
 					}
 				}

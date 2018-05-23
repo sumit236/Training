@@ -21,10 +21,10 @@ import com.springboot.bank.repository.TransactionDAO;
 public class TransactionServiceImpl implements TransactionService {
 
 	@Autowired
-	TransactionDAO transactionDao;
+	private TransactionDAO transactionDao;
 
 	@Autowired
-	CustomerDAO customerdao;
+	private CustomerDAO customerdao;
 
 	/*
 	 *@MethodName	:	createTransaction.

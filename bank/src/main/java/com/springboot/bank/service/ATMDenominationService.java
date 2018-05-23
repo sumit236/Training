@@ -3,8 +3,9 @@
  */
 package com.springboot.bank.service;
 
-import java.math.BigDecimal;
+import java.util.List;
 import com.springboot.bank.exception.BankException;
+import com.springboot.bank.model.RefMoney;
 
 /**
  * @author Sumit
@@ -12,5 +13,5 @@ import com.springboot.bank.exception.BankException;
  */
 public interface ATMDenominationService {
 
-	void addDenomination(BigDecimal amount, Long atmId, Long atmDenominationId) throws BankException;
+	void createATMDenomination(Long atmId, List<RefMoney> denominationList) throws BankException;
 }

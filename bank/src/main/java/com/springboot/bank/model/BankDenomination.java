@@ -3,13 +3,12 @@
  */
 package com.springboot.bank.model;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
 
 /**
  * @author Sumit
@@ -21,9 +20,7 @@ public class BankDenomination {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long bankDenominationId;
-	@OneToOne(targetEntity = Bank.class)
-	private Bank bank;
+	private Integer bankDenominationId;
 	private Integer noOfDenomination;
 	@OneToOne(targetEntity = RefMoney.class)
 	private RefMoney refMoney;
@@ -33,36 +30,6 @@ public class BankDenomination {
 	 */
 	public BankDenomination() {
 		super();
-	}
-
-	/**
-	 * @return the bankDenominationId
-	 */
-	public Long getBankDenominationId() {
-		return bankDenominationId;
-	}
-
-	/**
-	 * @param bankDenominationId
-	 *            the bankDenominationId to set
-	 */
-	public void setBankDenominationId(Long bankDenominationId) {
-		this.bankDenominationId = bankDenominationId;
-	}
-
-	/**
-	 * @return the bank
-	 */
-	public Bank getBank() {
-		return bank;
-	}
-
-	/**
-	 * @param bank
-	 *            the bank to set
-	 */
-	public void setBank(Bank bank) {
-		this.bank = bank;
 	}
 
 	/**
@@ -101,23 +68,19 @@ public class BankDenomination {
 	 * @param noOfDenomination
 	 * @param refMoney
 	 */
-	public BankDenomination(Long bankDenominationId, Bank bank, Integer noOfDenomination, RefMoney refMoney) {
+	public BankDenomination(Integer noOfDenomination, RefMoney refMoney) {
 		super();
-		this.bankDenominationId = bankDenominationId;
-		this.bank = bank;
 		this.noOfDenomination = noOfDenomination;
 		this.refMoney = refMoney;
 	}
 
 	/*
-	 * (non-Javadoc)
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "BankDenomination [bankDenominationId=" + bankDenominationId + ", bank=" + bank + ", noOfDenomination="
-				+ noOfDenomination + ", refMoney=" + refMoney + "]";
+		return " noOfDenomination=" + noOfDenomination + ", refMoney=" + refMoney + "]";
 	}
 
 }

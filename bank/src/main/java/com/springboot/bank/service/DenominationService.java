@@ -4,9 +4,12 @@
 package com.springboot.bank.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import com.springboot.bank.exception.BankException;
+import com.springboot.bank.model.RefMoney;
+import com.springboot.bank.wrapper.DenominationDetails;
 
 /**
  * @author Sumit
@@ -14,7 +17,7 @@ import com.springboot.bank.exception.BankException;
  */
 public interface DenominationService {
 
-	public Map<BigDecimal, Integer> getDenominationList() throws BankException;
+	List<RefMoney> createDenomination(DenominationDetails denominationDetails) throws BankException;
 
-	Map<BigDecimal, Integer> addDenomination(BigDecimal amount) throws BankException;
+	Map<BigDecimal, Integer> addDenomination(BigDecimal amountToBeAdded) throws BankException;
 }

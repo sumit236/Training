@@ -24,7 +24,7 @@ import com.springboot.bank.service.TransactionService;
 @RestController
 public class TransactionController {
 
-	final Logger LOGGER = Logger.getLogger(TransactionController.class);
+	private final Logger LOGGER = Logger.getLogger(TransactionController.class);
 
 	@Autowired
 	private TransactionService transactionService;

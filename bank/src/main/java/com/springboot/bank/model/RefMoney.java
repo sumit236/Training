@@ -5,6 +5,7 @@ package com.springboot.bank.model;
 
 import java.math.BigDecimal;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * @author Sumit
@@ -13,15 +14,8 @@ import javax.persistence.Entity;
 @Entity
 public class RefMoney {
 
+	@Id
 	private BigDecimal denomination;
-
-	/**
-	 * @param denomination
-	 */
-	public RefMoney(BigDecimal denomination) {
-		super();
-		this.denomination = denomination;
-	}
 
 	/**
 	 * @return the denomination
@@ -39,12 +33,28 @@ public class RefMoney {
 	}
 
 	/*
+	 * (non-Javadoc)
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "RefMoney [denomination=" + denomination + "]";
+	}
+
+	/**
+	 * @param denomination
+	 */
+	public RefMoney(BigDecimal denomination) {
+		super();
+		this.denomination = denomination;
+	}
+
+	/**
+	 * 
+	 */
+	public RefMoney() {
+		super();
 	}
 
 }

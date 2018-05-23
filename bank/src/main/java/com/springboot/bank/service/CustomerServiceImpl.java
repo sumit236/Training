@@ -21,10 +21,10 @@ import com.springboot.bank.wrapper.WrapperBankCustomer;
 public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
-	CustomerDAO customerDao;
+	private CustomerDAO customerDao;
 
 	@Autowired
-	BankDAO bankDao;
+	private BankDAO bankDao;
 
 	/*
 	 *@MethodName	:	createCustomer.

@@ -4,8 +4,6 @@
 package com.springboot.bank.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -18,86 +16,64 @@ import javax.persistence.OneToOne;
 public class ATMDenomination {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long atmDenominationId;
-	@OneToOne(targetEntity = ATM.class)
-	private ATM atm;
-	@OneToOne(targetEntity = Denomination.class)
-	private Denomination denomination;
+	private Integer noOfDenomination;
+	@OneToOne(targetEntity = RefMoney.class)
+	private RefMoney refMoney;
 
 	/**
 	 * 
 	 */
 	public ATMDenomination() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @param atmDenominationId
-	 * @param atm
-	 * @param denomination
+	 * @param noOfDenomination
+	 * @param refMoney
 	 */
-	public ATMDenomination(Long atmDenominationId, ATM atm, Denomination denomination) {
+	public ATMDenomination(Integer noOfDenomination, RefMoney refMoney) {
 		super();
-		this.atmDenominationId = atmDenominationId;
-		this.atm = atm;
-		this.denomination = denomination;
+		this.noOfDenomination = noOfDenomination;
+		this.refMoney = refMoney;
 	}
 
 	/**
-	 * @return the atmDenominationId
+	 * @return the noOfDenomination
 	 */
-	public Long getAtmDenominationId() {
-		return atmDenominationId;
+	public Integer getNoOfDenomination() {
+		return noOfDenomination;
 	}
 
 	/**
-	 * @param atmDenominationId
-	 *            the atmDenominationId to set
+	 * @param noOfDenomination
+	 *            the noOfDenomination to set
 	 */
-	public void setAtmDenominationId(Long atmDenominationId) {
-		this.atmDenominationId = atmDenominationId;
+	public void setNoOfDenomination(Integer noOfDenomination) {
+		this.noOfDenomination = noOfDenomination;
 	}
 
 	/**
-	 * @return the atm
+	 * @return the refMoney
 	 */
-	public ATM getAtm() {
-		return atm;
+	public RefMoney getRefMoney() {
+		return refMoney;
 	}
 
 	/**
-	 * @param atm
-	 *            the atm to set
+	 * @param refMoney
+	 *            the refMoney to set
 	 */
-	public void setAtm(ATM atm) {
-		this.atm = atm;
-	}
-
-	/**
-	 * @return the denomination
-	 */
-	public Denomination getDenomination() {
-		return denomination;
-	}
-
-	/**
-	 * @param denomination
-	 *            the denomination to set
-	 */
-	public void setDenomination(Denomination denomination) {
-		this.denomination = denomination;
+	public void setRefMoney(RefMoney refMoney) {
+		this.refMoney = refMoney;
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "ATMDenomination [atmDenominationId=" + atmDenominationId + ", atm=" + atm + ", denomination="
-				+ denomination + "]";
+		return "ATMDenomination [noOfDenomination=" + noOfDenomination + ", refMoney=" + refMoney + "]";
 	}
 
 }

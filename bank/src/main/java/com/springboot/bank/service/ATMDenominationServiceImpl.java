@@ -3,23 +3,17 @@
  */
 package com.springboot.bank.service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.springboot.bank.exception.BankException;
 import com.springboot.bank.model.ATM;
 import com.springboot.bank.model.ATMDenomination;
-import com.springboot.bank.model.Denomination;
+import com.springboot.bank.model.RefMoney;
 import com.springboot.bank.repository.ATMDAO;
 import com.springboot.bank.repository.ATMDenominationDAO;
-import com.springboot.bank.repository.BankDAO;
-import com.springboot.bank.repository.BankDenominationDAO;
 
 /**
  * @author Sumit
@@ -29,23 +23,39 @@ import com.springboot.bank.repository.BankDenominationDAO;
 public class ATMDenominationServiceImpl implements ATMDenominationService {
 
 	@Autowired
-	private BankDAO bankDao;
-
-	@Autowired
 	private ATMDAO atmDao;
 
 	@Autowired
 	private ATMDenominationDAO atmDenominationDao;
 
-	@Autowired
-	private BankDenominationDAO denominationDao;
+	@Override
+	public void createATMDenomination(Long atmId, List<RefMoney> denominationList) throws BankException {
+
+		Optional<ATM> atmList = atmDao.findById(atmId);
+		ATM atm = null;
+		if (atmList.isPresent()) {
+			atm = atmList.get();
+			Iterator iterator = denominationList.iterator();
+			while (iterator.hasNext()) {
+				RefMoney rf1 = (RefMoney) iterator.next();
+				ATMDenomination atmDenomination = new ATMDenomination();
+				atmDenomination.setRefMoney(rf1);
+				atmDenomination.setNoOfDenomination(0);
+				atmDenominationDao.save(atmDenomination);
+			}
+			atmDao.save(atm);
+		} else {
+			throw new BankException("atm not found");
+		}
+	}
+}
 
 	/*
 	 * @see
 	 * com.springboot.bank.service.ATMDenominationService#addDenomination(java.math.
 	 * BigDecimal)
 	 */
-	@Override
+	/*@Override
 	public void addDenomination(BigDecimal amount, Long atmId, Long atmDenominationId) throws BankException {
 
 		List<BigDecimal> denominationList = new ArrayList<BigDecimal>();
@@ -97,5 +107,4 @@ public class ATMDenominationServiceImpl implements ATMDenominationService {
 				throw new BankException("atm not found");
 			}
 		}
-	}
-}
+	}*/

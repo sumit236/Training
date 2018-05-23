@@ -19,7 +19,7 @@ import com.springboot.bank.repository.BankDAO;
 @Service("bankService")
 public class BankServiceImpl implements BankService {
 	@Autowired
-	BankDAO bankDao;
+	private BankDAO bankDao;
 
 	/*
 	 *@MethodName	:	createBank.
