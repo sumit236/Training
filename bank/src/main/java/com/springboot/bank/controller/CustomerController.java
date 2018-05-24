@@ -54,7 +54,21 @@ public class CustomerController {
 			LOGGER.error(e.getMessage());
 		}
 		if (customerData == null)
-			throw new BankException("No such Id of Bank exixts");
+			throw new BankException("No such Id of customer exixts");
+		else
+			return new ResponseEntity<Customer>(customerData, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/updateCustomer/{customerId}")
+	public ResponseEntity<Customer> updateCustomerDetails(@PathVariable Long customerId) throws BankException {
+		Customer customerData = null;
+		try {
+			customerData = customerService.updateCustomerDetails(customerId);
+		} catch (BankException e) {
+			LOGGER.error(e.getMessage());
+		}
+		if (customerData == null)
+			throw new BankException("No such Id of customer exixts");
 		else
 			return new ResponseEntity<Customer>(customerData, HttpStatus.OK);
 	}

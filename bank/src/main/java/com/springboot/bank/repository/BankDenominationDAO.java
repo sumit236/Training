@@ -13,4 +13,5 @@ import com.springboot.bank.model.BankDenomination;
 
 public interface BankDenominationDAO extends JpaRepository<BankDenomination, Long> {
 
+	BankDenomination findBybank(Long bankId);
 }

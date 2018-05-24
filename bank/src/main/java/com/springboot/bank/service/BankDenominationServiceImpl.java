@@ -3,12 +3,13 @@
  */
 package com.springboot.bank.service;
 
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.springboot.bank.exception.BankException;
 import com.springboot.bank.model.Bank;
 import com.springboot.bank.model.BankDenomination;
@@ -37,53 +38,55 @@ public class BankDenominationServiceImpl implements BankDenominationService {
 	 * com.springboot.bank.service.BankDenominationService#addToBankFromAccount(java
 	 * .lang.Long, java.lang.Long)
 	 */
-/*	@Override
-	public void addToBankFromAccount(Long bankId, BigDecimal amountToBeAdded, Map<BigDecimal, Integer> denominationList)
-			throws BankException {
+	@Override
+	public void addToBankFromAccount(Long bankId, BigDecimal amountToBeAdded) throws BankException {
 
-		Bank bank = null;
-		RefMoney refMoney = null;
+		Random random = new Random();
 		Optional<Bank> bankList = bankDao.findById(bankId);
+		RefMoney refMoney;
+		Bank bank = null;
 		if (bankList.isPresent()) {
 			bank = bankList.get();
-			Set denominationSetOfKeys = denominationList.keySet();
-			BankDenomination bankDenomination = new BankDenomination();
-			Iterator iterator = denominationSetOfKeys.iterator();
+			BankDenomination bankDenomination = bankDenominationDAO.findBybank(bankId);
+			refMoney = bankDenomination.getRefMoney();
+			List<RefMoney> refMoneyList = refMoneyDAO.findAll();
+			BigDecimal remainderMoney = amountToBeAdded;
+			Iterator iteratorOfDenomination = refMoneyList.iterator();
+			RefMoney randomGeneratedRefMoney = null;
+			BigDecimal randomGeneratedNote = null;
+			while (iteratorOfDenomination.hasNext()) {
+				int randomIndex = random.nextInt(refMoneyList.size());
+				randomGeneratedRefMoney = refMoneyList.get(randomIndex);
+				randomGeneratedNote = randomGeneratedRefMoney.getDenomination();
 
-			// set money for bank
-			BigDecimal newBankBalance = amountToBeAdded.add(bank.getAmount());
-			bank.setAmount(newBankBalance);
-			bankDao.save(bank);
-			
-			while (iterator.hasNext()) {
-				BigDecimal denomination = (BigDecimal) iterator.next();
-				refMoney = bankDenomination.getRefMoney();
-				refMoney.setDenomination(denomination);
-				refMoneyDAO.save(refMoney);
-				// null pointer exception
-				Integer updatedDenomination = bankDenomination.getNoOfDenomination()
-						+ denominationList.get(denomination);
+				if (randomGeneratedNote.compareTo(remainderMoney) == 0
+						|| randomGeneratedNote.compareTo(remainderMoney) == -1) {
+					Integer noOfDenominations = remainderMoney.divide(randomGeneratedNote).intValue();
+					bankDenomination.setNoOfDenomination(noOfDenominations);
+					// total no of denomination mil gae ab store karni hai isko bankDenom me
+					// problem statement: vo bankDenom me ek bigdecimal field hai for
+					// totalno fir baaki refmoney ke attributes kaise set honge
 
-				// set bankdenomination
-				bankDenomination.setBank(bank);
-				bankDenomination.setRefMoney(refMoney);
-				bankDenomination.setNoOfDenomination(updatedDenomination);
-				bankDenominationDAO.save(bankDenomination);
+					remainderMoney = remainderMoney.remainder(randomGeneratedNote);
+					if (remainderMoney.compareTo(BigDecimal.ZERO) == 0) {
+						break;
+					}
+					refMoneyList.remove(randomGeneratedNote);
+				}
 			}
-		} else {
-			throw new BankException("No such bank account exists");
 		}
-	}*/
+	}
 
-	public void createBankDenomination(Long bankId, List<RefMoney> denominationList) throws BankException {
+	public void createBankDenomination(Long bankId, List<RefMoney> refMoneyList) throws BankException {
 		Optional<Bank> bankList = bankDao.findById(bankId);
 		Bank bank = null;
 		if (bankList.isPresent()) {
 			bank = bankList.get();
-			Iterator iterator = denominationList.iterator();
+			Iterator iterator = refMoneyList.iterator();
 			while (iterator.hasNext()) {
 				RefMoney rf1 = (RefMoney) iterator.next();
-				BankDenomination bankDenomination = new BankDenomination();
+				BankDenomination bankDenomination = bankDenominationDAO.findBybank(bankId);
+				bankDenomination.getRefMoney();
 				bankDenomination.setRefMoney(rf1);
 				bankDenomination.setNoOfDenomination(0);
 				bankDenominationDAO.save(bankDenomination);

@@ -39,51 +39,33 @@ public class DenominationServiceImpl implements DenominationService {
 	@Override
 	public Map<BigDecimal, Integer> addDenomination(BigDecimal amountToBeAdded) throws BankException {
 
-		RefMoney refMoney = null;
+
 		BigDecimal remainderMoney = amountToBeAdded;
 		BigDecimal randomGeneratedNote = null;
 		Map<BigDecimal,Integer> returningList = new HashMap<>();
-
-		Random random = new Random();
-	
-		Iterator iteratorOfDenomination = denominationList.iterator();
-			while(iteratorOfDenomination.hasNext()) {
-				
-			int randomIndex = random.nextInt(denominationList.size());
-			randomGeneratedNote =  denominationList.get(randomIndex);
-			
-			if (randomGeneratedNote.compareTo(remainderMoney) == 0 || randomGeneratedNote.compareTo(remainderMoney) == -1) {
-				Integer noOfDenominations = remainderMoney.divide(randomGeneratedNote).intValue();
-	
-				returningList.put(randomGeneratedNote, noOfDenominations);
-				remainderMoney = remainderMoney.remainder(randomGeneratedNote);
-				if (remainderMoney.compareTo(BigDecimal.ZERO) == 0) {
-					break;
-				}
-			}
-			denominationList.remove(randomGeneratedNote);
-		}
+		
+		
+		
+		
+		
 		return returningList;
 	}
-
-}
-
-
+	
 
 	@Override
-	public List<RefMoney> createDenomination(DenominationDetails denominationDetails) throws BankException {
-		List<RefMoney> response = new ArrayList<>();
+	public List<RefMoney> createDenomination(DenominationDetails denominationDetails) throws BankException{
+		List<RefMoney> refMoneyList = new ArrayList<>();
 		final Long bankId = denominationDetails.getBankId();
 		final Long atmId = denominationDetails.getAtmId();
 		final List<BigDecimal> denominationList = denominationDetails.getDenominationList();
 		for (BigDecimal denom : denominationList) {
 			RefMoney rf1 = new RefMoney();
 			rf1.setDenomination(denom);
-			response.add(rf1);
+			refMoneyList.add(rf1);
 		}
-		refMoneyDAO.saveAll(response);
-		bankDenominationService.createBankDenomination(bankId, response);
-		atmDenominationService.createATMDenomination(atmId, response);
-		return response;
+		refMoneyDAO.saveAll(refMoneyList);
+		bankDenominationService.createBankDenomination(bankId, refMoneyList);
+		atmDenominationService.createATMDenomination(atmId, refMoneyList);
+		return refMoneyList;
 	}
 }

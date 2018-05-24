@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.training.bankmongo.Model;
+package com.springboot.bank.model;
 
 import java.sql.Timestamp;
 import java.util.UUID;

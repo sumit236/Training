@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Table(name = "bank")
 @Entity
-public class Bank {
+public class Bank extends BaseEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

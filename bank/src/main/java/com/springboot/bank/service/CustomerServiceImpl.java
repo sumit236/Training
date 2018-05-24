@@ -27,8 +27,8 @@ public class CustomerServiceImpl implements CustomerService {
 	private BankDAO bankDao;
 
 	/*
-	 *@MethodName	:	createCustomer.
-	 * Description	:	It will create a new customer having bankId associated with it.
+	 * @MethodName : createCustomer. Description : It will create a new customer
+	 * having bankId associated with it.
 	 */
 	@Override
 	public Customer createCustomer(WrapperBankCustomer wrapperBankCustomer) throws BankException {
@@ -46,9 +46,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	/*
-	 *@MethodName	:	getCustomerDetails.
-	 * Description	:	It will take customerId as a parameter and find 
-	 * 					the details of a particular customer from it. 
+	 * @MethodName : getCustomerDetails. Description : It will take customerId as a
+	 * parameter and find the details of a particular customer from it.
 	 */
 	@Override
 	public Customer getCustomerDetails(Long customerId) throws BankException {
@@ -56,7 +55,21 @@ public class CustomerServiceImpl implements CustomerService {
 		if (customerList.isPresent()) {
 			Customer customer = customerList.get();
 			return customer;
-		} else
+		} else {
 			throw new BankException("Bank details not found");
+		}
+	}
+
+	@Override
+	public Customer updateCustomerDetails(Long customerId) throws BankException {
+		Optional<Customer> customerList = customerDao.findById(customerId);
+		if (customerList.isPresent()) {
+			Customer customer = customerList.get();
+			customer.setCustomerName("Naruto Uzumaki");
+			customerDao.save(customer);
+			return customer;
+		} else {
+			throw new BankException("Bank details not found");
+		}
 	}
 }

@@ -19,7 +19,7 @@ import org.springframework.lang.NonNull;
 
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class Customer  extends BaseEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +32,7 @@ public class Customer {
 	private Bank bank;
 	// @JoinTable(name = "bank_customer", joinColumns = @JoinColumn(name =
 	// "customerId"), inverseJoinColumns = @JoinColumn(name = "bankId"))
+
 
 	/**
 	 * 
@@ -46,8 +47,7 @@ public class Customer {
 	 * @param customerPin
 	 * @param bank
 	 */
-	public Customer(Long customerId, String customerName, Integer customerPin, Bank bank) {
-		this.customerId = customerId;
+	public Customer(String customerName, Integer customerPin, Bank bank) {
 		this.customerName = customerName;
 		this.customerPin = customerPin;
 		this.bank = bank;

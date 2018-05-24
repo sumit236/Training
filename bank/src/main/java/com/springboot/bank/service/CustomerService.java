@@ -16,4 +16,6 @@ public interface CustomerService {
 	Customer createCustomer(WrapperBankCustomer wrapperBankCustomer) throws BankException;
 
 	Customer getCustomerDetails(Long customerId) throws BankException;
+	
+	Customer updateCustomerDetails(Long customerId) throws BankException;
 }

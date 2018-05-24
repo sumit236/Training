@@ -11,6 +11,6 @@ import com.training.bankmongo.Model.Audit;
  * @author Sumit
  *
  */
-public interface AuditDAO extends MongoRepository<Audit, UUID> {
+public interface AuditDAO extends MongoRepository<Audit, String> {
 
 }

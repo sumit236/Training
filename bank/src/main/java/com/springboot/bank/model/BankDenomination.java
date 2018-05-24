@@ -9,14 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-
 /**
  * @author Sumit
  *
  */
 
 @Entity
-public class BankDenomination {
+public class BankDenomination extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +23,8 @@ public class BankDenomination {
 	private Integer noOfDenomination;
 	@OneToOne(targetEntity = RefMoney.class)
 	private RefMoney refMoney;
+	@OneToOne(targetEntity = Bank.class)
+	private Bank bank;
 
 	/**
 	 * 
@@ -62,25 +63,44 @@ public class BankDenomination {
 		this.refMoney = refMoney;
 	}
 
-	/**
-	 * @param bankDenominationId
-	 * @param bank
-	 * @param noOfDenomination
-	 * @param refMoney
-	 */
-	public BankDenomination(Integer noOfDenomination, RefMoney refMoney) {
-		super();
-		this.noOfDenomination = noOfDenomination;
-		this.refMoney = refMoney;
-	}
-
 	/*
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return " noOfDenomination=" + noOfDenomination + ", refMoney=" + refMoney + "]";
+		return "BankDenomination [bankDenominationId=" + bankDenominationId + ", noOfDenomination=" + noOfDenomination
+				+ ", refMoney=" + refMoney + ", bank=" + bank + "]";
+	}
+
+	/**
+	 * @return the bankDenominationId
+	 */
+	public Integer getBankDenominationId() {
+		return bankDenominationId;
+	}
+
+	/**
+	 * @param bankDenominationId
+	 *            the bankDenominationId to set
+	 */
+	public void setBankDenominationId(Integer bankDenominationId) {
+		this.bankDenominationId = bankDenominationId;
+	}
+
+	/**
+	 * @return the bank
+	 */
+	public Bank getBank() {
+		return bank;
+	}
+
+	/**
+	 * @param bank
+	 *            the bank to set
+	 */
+	public void setBank(Bank bank) {
+		this.bank = bank;
 	}
 
 }

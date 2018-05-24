@@ -14,5 +14,11 @@ public interface AuditService {
 
 	Audit createAudit(Audit audit);
 
+	Audit getAudit(String uuid);
+
+	Audit deleteAudit(String uuid);
+
+	Audit updateAudit(String uuid);
+
 	
 }

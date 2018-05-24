@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
  */
 
 @Entity
-public class ATMDenomination {
+public class ATMDenomination extends BaseEntity{
 
 	@Id
 	private Integer noOfDenomination;
