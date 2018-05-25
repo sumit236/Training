@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.springboot.bank.service;
+package com.springboot.bank.model;
 
 /**
  * @author Sumit

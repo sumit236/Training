@@ -83,7 +83,7 @@ public class ATMServiceImpl implements ATMService {
 				BigDecimal finalAmount = bankMoney.subtract(moneyToBeAddedToATM);
 				if (finalAmount.compareTo(BigDecimal.ZERO) == 1) {
 					BigDecimal atmMoney = atm.getMoney().add(moneyToBeAddedToATM);
-					atmDenominationService.addDenomination(moneyToBeAddedToATM,atmId,atmDenominationId);
+					//atmDenominationService.addDenomination(moneyToBeAddedToATM,atmId,atmDenominationId);
 					atm.setMoney(atmMoney);
 					bank.setAmount(finalAmount);
 					atmdata = atmDao.save(atm);

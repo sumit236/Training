@@ -60,7 +60,7 @@ public class CustomerController {
 	}
 	
 	@GetMapping(value = "/updateCustomer/{customerId}")
-	public ResponseEntity<Customer> updateCustomerDetails(@PathVariable Long customerId) throws BankException {
+	public ResponseEntity<Customer> updateCustomerDetails(@PathVariable Long customerId) throws BankException, CloneNotSupportedException {
 		Customer customerData = null;
 		try {
 			customerData = customerService.updateCustomerDetails(customerId);

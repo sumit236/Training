@@ -23,7 +23,7 @@ public class Audit<T> {
 	private String timestamp;
 	private Object oldValue;
 	private Object newValue;
-
+	
 	/**
 	 * @return the uuid
 	 */

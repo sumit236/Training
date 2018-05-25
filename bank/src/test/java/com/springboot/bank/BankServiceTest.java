@@ -5,7 +5,6 @@ package com.springboot.bank;
 
 /**
  * @author Sumit
- *
  */
 
 import static org.hamcrest.CoreMatchers.is;

@@ -19,7 +19,7 @@ import org.springframework.lang.NonNull;
 
 @Entity
 @Table(name = "customer")
-public class Customer  extends BaseEntity{
+public class Customer extends BaseEntity implements Cloneable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,6 @@ public class Customer  extends BaseEntity{
 	// @JoinTable(name = "bank_customer", joinColumns = @JoinColumn(name =
 	// "customerId"), inverseJoinColumns = @JoinColumn(name = "bankId"))
 
-
 	/**
 	 * 
 	 */
@@ -42,7 +41,6 @@ public class Customer  extends BaseEntity{
 	}
 
 	/**
-	 * @param customerId
 	 * @param customerName
 	 * @param customerPin
 	 * @param bank
@@ -53,6 +51,12 @@ public class Customer  extends BaseEntity{
 		this.bank = bank;
 	}
 
+	public Customer(Long customerId,String customerName, Integer customerPin, Bank bank) {
+		this.customerId = customerId;
+		this.customerName = customerName;
+		this.customerPin = customerPin;
+		this.bank = bank;
+	}
 	/**
 	 * @return the customerId
 	 */
@@ -114,11 +118,16 @@ public class Customer  extends BaseEntity{
 	}
 
 	/*
-	 * @return toString() representation of given object 
+	 * @return toString() representation of given object
 	 */
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerPin=" + customerPin
 				+ ", bank=" + bank + "]";
+	}
+
+	@Override
+	public Customer clone() throws CloneNotSupportedException {
+		return (Customer) super.clone();
 	}
 }

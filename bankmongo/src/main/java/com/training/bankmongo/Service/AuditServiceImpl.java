@@ -26,10 +26,7 @@ public class AuditServiceImpl implements AuditService {
 	 */
 	@Override
 	public Audit createAudit(Audit audit) {
-
-		Audit auditDummy = null;
-		auditDummy = auditDAO.save(audit);
-		return audit;
+		return auditDAO.insert(audit);
 	}
 
 	@Override

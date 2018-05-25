@@ -15,7 +15,7 @@ import com.springboot.bank.model.RefMoney;
  */
 public interface BankDenominationService {
 
-	void addToBankFromAccount(BigDecimal amountToBeAdded,Long bankId) ;
+	void addToBankFromAccount(Long bankId,BigDecimal amountToBeAdded) throws BankException;
 
 	void createBankDenomination(Long bankId, List<RefMoney> refMoneyList) throws BankException;
 

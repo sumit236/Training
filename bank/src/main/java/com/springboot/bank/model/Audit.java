@@ -6,17 +6,16 @@ package com.springboot.bank.model;
 import java.sql.Timestamp;
 import java.util.UUID;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author Sumit
  *
  */
-@Document
+
 public class Audit<T> {
 
 	@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String uuid;
 	private String eventName;
 	private String eventType;
@@ -125,7 +124,7 @@ public class Audit<T> {
 	 * @param oldValue
 	 * @param newValue
 	 */
-	public Audit( String eventName, String eventType, String timestamp, T oldValue, T newValue) {
+	public Audit(String eventName, String eventType, String timestamp, T oldValue, T newValue) {
 		super();
 		this.eventName = eventName;
 		this.eventType = eventType;
@@ -133,6 +132,7 @@ public class Audit<T> {
 		this.oldValue = oldValue;
 		this.newValue = newValue;
 	}
+
 	/**
 	 * 
 	 */

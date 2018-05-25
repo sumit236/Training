@@ -17,5 +17,5 @@ public interface CustomerService {
 
 	Customer getCustomerDetails(Long customerId) throws BankException;
 	
-	Customer updateCustomerDetails(Long customerId) throws BankException;
+	Customer updateCustomerDetails(Long customerId) throws BankException, CloneNotSupportedException;
 }
