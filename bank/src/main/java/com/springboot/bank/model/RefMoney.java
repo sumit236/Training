@@ -33,8 +33,6 @@ public class RefMoney  extends BaseEntity{
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

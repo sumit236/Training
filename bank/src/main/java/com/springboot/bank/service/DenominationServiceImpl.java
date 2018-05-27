@@ -6,14 +6,10 @@ package com.springboot.bank.service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.springboot.bank.exception.BankException;
 import com.springboot.bank.model.RefMoney;
 import com.springboot.bank.repository.RefMoneyDAO;
@@ -40,14 +36,9 @@ public class DenominationServiceImpl implements DenominationService {
 	public Map<BigDecimal, Integer> addDenomination(BigDecimal amountToBeAdded) throws BankException {
 
 
-		BigDecimal remainderMoney = amountToBeAdded;
+		final BigDecimal remainderMoney = amountToBeAdded;
 		BigDecimal randomGeneratedNote = null;
 		Map<BigDecimal,Integer> returningList = new HashMap<>();
-		
-		
-		
-		
-		
 		return returningList;
 	}
 	

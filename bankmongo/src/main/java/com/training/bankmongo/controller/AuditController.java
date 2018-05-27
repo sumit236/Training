@@ -33,7 +33,6 @@ public class AuditController {
 	Audit createAudit(@RequestBody Audit audit){
 		Audit auditDummy = null;
 		try {
-			System.out.println(">>>>>>>>>>>>>> M2"+audit);
 		auditDummy = auditService.createAudit(audit);
 		}catch(Exception e){
 			LOGGER.error("audit not found");

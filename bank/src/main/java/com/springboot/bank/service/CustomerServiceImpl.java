@@ -30,11 +30,12 @@ public class CustomerServiceImpl implements CustomerService {
 	private BankDAO bankDao;
 
 	@Autowired
-	AuditService auditService;
+	private AuditService auditService;
 
 	/*
-	 * @MethodName : createCustomer. Description : It will create a new customer
-	 * having bankId associated with it.
+	 * @MethodName : createCustomer. 
+	 * Description : It will create a new customer having bankId 
+	 * 				 associated with it.
 	 */
 	@Override 
 	public Customer createCustomer(WrapperBankCustomer wrapperBankCustomer) throws BankException {
@@ -50,8 +51,9 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	/*
-	 * @MethodName : getCustomerDetails. Description : It will take customerId as a
-	 * parameter and find the details of a particular customer from it.
+	 * @MethodName : getCustomerDetails. 
+	 * Description : It will take customerId as a parameter and find the 
+	 * 				 details of a particular customer from it.
 	 */
 	@Override
 	public Customer getCustomerDetails(Long customerId) throws BankException {
@@ -64,6 +66,11 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 	}
 
+	/*
+	 * @MethodName : updateCustomerDetails. 
+	 * Description : It will take customerId as a parameter and find the details of a 
+	 * 				 particular customer and update its details.
+	 */
 	@Override
 	public Customer updateCustomerDetails(Long customerId) throws BankException, CloneNotSupportedException {
 		Optional<Customer> customerList = customerDao.findById(customerId);

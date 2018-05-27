@@ -7,6 +7,11 @@ import com.springboot.bank.model.Audit;
 @Service("auditService")
 public class AuditServiceImpl implements AuditService {
 	
+	/*
+	 * @MethodName : getAudit 
+	 * Description : The method accepts the Audit object and passes it to different micro-service 
+	 * 				 using rest template. 			 
+	 */
 	@Override
 	public void getAudit(Audit auditData) {
 		RestTemplate restTemplate = new RestTemplate();

@@ -12,5 +12,9 @@ import com.training.bankmongo.Model.Audit;
  *
  */
 public interface AuditDAO extends MongoRepository<Audit, String> {
+	
+	Audit findByeventName(String name);
+	Long deleteByeventName(String name);
+	Audit findByeventType(String name);
 
 }

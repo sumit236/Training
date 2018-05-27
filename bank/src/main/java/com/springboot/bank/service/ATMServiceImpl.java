@@ -26,19 +26,19 @@ import com.springboot.bank.wrapper.WrapperBankATM;
 public class ATMServiceImpl implements ATMService {
 
 	@Autowired
-	ATMDAO atmDao;
+	private ATMDAO atmDao;
 
 	@Autowired
-	BankDAO bankDao;
+	private BankDAO bankDao;
 
 	@Autowired
-	AccountDAO accountDao;
+	private AccountDAO accountDao;
 
 	@Autowired
-	BankDenominationDAO bankDenominationDao;
+	private BankDenominationDAO bankDenominationDao;
 	
 	@Autowired
-	ATMDenominationService atmDenominationService;
+	private ATMDenominationService atmDenominationService;
 	/*
 	 * @MethodName : createATM 
 	 * Description : The method accepts the wrapper object consisting bankId, ATM object

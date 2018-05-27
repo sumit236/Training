@@ -32,7 +32,7 @@ public class BankDenominationServiceImpl implements BankDenominationService {
 	private RefMoneyDAO refMoneyDAO;
 
 	@Autowired
-	BankDenominationDAO bankDenominationDAO;
+	private BankDenominationDAO bankDenominationDAO;
 
 	/*
 	 * com.springboot.bank.service.BankDenominationService#addToBankFromAccount(java
