@@ -28,60 +28,57 @@ public class AuditController {
 	AuditService auditService;
 
 	final Logger LOGGER = Logger.getLogger(AuditController.class);
-	
+
 	@PostMapping("/create")
-	Audit createAudit(@RequestBody Audit audit){
+	Audit createAudit(@RequestBody Audit audit) {
 		Audit auditDummy = null;
 		try {
-		auditDummy = auditService.createAudit(audit);
-		}catch(Exception e){
+			auditDummy = auditService.createAudit(audit);
+		} catch (Exception e) {
 			LOGGER.error("audit not found");
 		}
 		return auditDummy;
 	}
-	
+
 	@GetMapping("/get/{eventName}")
-	ResponseEntity<Audit> getAudit(@PathVariable String eventName){
+	ResponseEntity<Audit> getAudit(@PathVariable String eventName) {
 		Audit auditDummy = null;
 		try {
 			auditDummy = auditService.getAudit(eventName);
-			}catch(Exception e){
-				LOGGER.error("audit not found");
-			}
-		if(auditDummy == null)
-		{
-			
+		} catch (Exception e) {
+			LOGGER.error("audit not found");
 		}
-	return new ResponseEntity<Audit>(auditDummy, HttpStatus.OK);
+		if (auditDummy == null) {
+
+		}
+		return new ResponseEntity<Audit>(auditDummy, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/delete/{uuid}")
-	ResponseEntity<Audit> deleteAudit(@PathVariable String uuid){
+	ResponseEntity<Audit> deleteAudit(@PathVariable String uuid) {
 		Audit auditDummy = null;
 		try {
 			auditDummy = auditService.deleteAudit(uuid);
-			}catch(Exception e){
-				LOGGER.error("audit not found");
-			}
-		if(auditDummy == null)
-		{
-			
+		} catch (Exception e) {
+			LOGGER.error("audit not found");
 		}
-	return new ResponseEntity<Audit>(auditDummy, HttpStatus.OK);
+		if (auditDummy == null) {
+
+		}
+		return new ResponseEntity<Audit>(auditDummy, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/update/{uuid}")
-	ResponseEntity<Audit> updateAudit(@PathVariable String uuid){
+	ResponseEntity<Audit> updateAudit(@PathVariable String uuid) {
 		Audit auditDummy = null;
 		try {
 			auditDummy = auditService.updateAudit(uuid);
-			}catch(Exception e){
-				LOGGER.error("audit not found");
-			}
-		if(auditDummy == null)
-		{
-			
+		} catch (Exception e) {
+			LOGGER.error("audit not found");
 		}
-	return new ResponseEntity<Audit>(auditDummy, HttpStatus.OK);
+		if (auditDummy == null) {
+
+		}
+		return new ResponseEntity<Audit>(auditDummy, HttpStatus.OK);
 	}
 }

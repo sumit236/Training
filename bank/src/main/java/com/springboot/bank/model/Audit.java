@@ -7,11 +7,14 @@ import java.sql.Timestamp;
 import java.util.UUID;
 import org.springframework.data.annotation.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * @author Sumit
  *
  */
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Audit {
 
 	@Id

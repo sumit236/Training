@@ -3,9 +3,16 @@
  */
 package com.springboot.bank.service;
 
+import java.io.IOException;
 import java.util.Optional;
+
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.springboot.bank.exception.BankException;
 import com.springboot.bank.model.Audit;
 import com.springboot.bank.model.Bank;
@@ -21,6 +28,7 @@ import com.springboot.bank.wrapper.WrapperBankCustomer;
  *
  */
 @Service("customerService")
+// @EnableBinding(RabbitService.class) used for annotation in rabitmq
 public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
@@ -29,21 +37,28 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private BankDAO bankDao;
 
-	@Autowired
-	private AuditService auditService;
+	/*
+	 * @Autowired private AuditService auditService;
+	 */
 
 	/*
-	 * @MethodName : createCustomer. 
-	 * Description : It will create a new customer having bankId 
-	 * 				 associated with it.
+	 * @Autowired RabbitService rabbitService;
 	 */
-	@Override 
+
+	@Autowired
+	RabbitTemplate rabbitemplate;
+
+	/*
+	 * @MethodName : createCustomer. Description : It will create a new customer
+	 * having bankId associated with it.
+	 */
+	@Override
 	public Customer createCustomer(WrapperBankCustomer wrapperBankCustomer) throws BankException {
 		Customer customer = null;
 		Customer customerData = null;
 		customer = wrapperBankCustomer.getCustomer();
 		Long bankId = wrapperBankCustomer.getBankId();
-		Optional<Bank> bankList = /*bankDao.findByBankId(bankId);*/ null;
+		Optional<Bank> bankList = /* bankDao.findByBankId(bankId); */ null;
 		Bank bank = bankList.get();
 		customer.setBank(bank);
 		customerData = customerDao.save(customer);
@@ -51,9 +66,8 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	/*
-	 * @MethodName : getCustomerDetails. 
-	 * Description : It will take customerId as a parameter and find the 
-	 * 				 details of a particular customer from it.
+	 * @MethodName : getCustomerDetails. Description : It will take customerId as a
+	 * parameter and find the details of a particular customer from it.
 	 */
 	@Override
 	public Customer getCustomerDetails(Long customerId) throws BankException {
@@ -66,10 +80,16 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 	}
 
+	public static String fromJavaToJson(Audit audit)
+			throws JsonGenerationException, JsonMappingException, IOException {
+		ObjectMapper jsonMapper = new ObjectMapper();
+		return jsonMapper.writeValueAsString(audit);
+	}
+
 	/*
-	 * @MethodName : updateCustomerDetails. 
-	 * Description : It will take customerId as a parameter and find the details of a 
-	 * 				 particular customer and update its details.
+	 * @MethodName : updateCustomerDetails. Description : It will take customerId as
+	 * a parameter and find the details of a particular customer and update its
+	 * details.
 	 */
 	@Override
 	public Customer updateCustomerDetails(Long customerId) throws BankException, CloneNotSupportedException {
@@ -85,7 +105,23 @@ public class CustomerServiceImpl implements CustomerService {
 			audit.setOldValue(customerDummy);
 			customer.setCustomerName("Kira");
 			audit.setNewValue(customer);
-			auditService.createAudit(audit);
+			// auditService.createAudit(audit); to call zuul to connect&pass to another
+			// microservice
+
+			String rabbitSendData = null;
+			try {
+				rabbitSendData = CustomerServiceImpl.fromJavaToJson(audit);
+			} catch (JsonGenerationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			rabbitemplate.convertAndSend(RabbitServiceImpl.ROUTING_KEY, rabbitSendData);
 			return customer;
 		} else {
 			throw new BankException("Bank details not found");
